@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+		xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee; http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>web01</display-name>
+  <welcome-file-list>
+    <welcome-file>home.jsp</welcome-file>
+<!--     <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file> -->
+  </welcome-file-list>
+  
+  <!-- ** url 매핑 
+        => 서블릿 정의 -> 매핑
+        => 동일 클래스라 하더라도 매핑네임 중복은 허용하지 않음 -->
+   
+   
+   <servlet>
+   		<servlet-name>myservlet</servlet-name>
+   		<servlet-class>servlet01.Ex01_HelloSevlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+   		    <servlet-name>myservlet</servlet-name>
+		  	<url-pattern>/hello</url-pattern>
+			<url-pattern>/안녕</url-pattern>
+			<url-pattern>/123</url-pattern>
+			<url-pattern>/7seven</url-pattern>
+			<url-pattern>/seven7</url-pattern>
+   </servlet-mapping>  
+   
+   <!-- Session Time 설정 : 단위가 분 단위, 0 또는 음수 사용시 무한 시간 / 디폴트 값은 0이다. -->
+   <session-config>
+   <session-timeout>1</session-timeout>
+   </session-config>
+   
+   <!-- Exception Test1: 응답상태코드 --> 
+   <error-page>
+   	<error-code>404</error-code>
+   	<location>/jsp04_Exception/ex02_404Page.jsp</location>
+   </error-page>
+   <error-page>
+   	<error-code>500</error-code>
+   	<location>/jsp04_Exception/ex02_500Page.jsp</location>
+   </error-page>
+   
+   <!-- Exception Test2: Exception Type --> 
+   <error-page>
+   	<exception-type>java.lang.NullPointerException</exception-type>
+   	<location>/jsp04_Exception/ex03_Null.jsp</location>
+   </error-page>
+   <error-page>
+   	<exception-type>java.lang.ArithmeticException</exception-type>
+   	<location>/jsp04_Exception/ex03_Arith.jsp</location>
+   </error-page>
+   
+   
+</web-app>
