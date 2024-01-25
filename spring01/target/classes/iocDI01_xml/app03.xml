@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 1) 고전적 방법 (직접 new : 소스 재컴파일) 
+		 => 기본생성자 호출	-->
+	<bean id="sstv" class="iocDI01_xml.SsTVs" lazy-init="true"/>
+	
+	<!-- 2) IOC/DI -> 생성자 주입 
+		 => 인자의 종류와 동일한(Type, Name, 갯수) 생성자가 호출 
+		 => 인자 매칭 방법은 name, index(0,1,2,3...) 속성을 적용 -->
+	<bean id="lgtv" class="iocDI01_xml.LgTVs" lazy-init="true">
+		<constructor-arg name="color" value="Gold"/>
+		<constructor-arg name="price" value="12345000"/>
+   <!-- <constructor-arg name="speaker" ref="sp"/> -->
+		<constructor-arg index="0" ref="sp"/>
+	</bean>
+	<bean id="sp" class="iocDI01_xml.Speaker" lazy-init="true"/>
+	
+	<!-- 3) IOC/DI -> setter 주입 --> <!-- index는 쓸 수 없다. setter 메소드에는 순서라는 게 존재하는게 아니기 때문. 모두 단일값 -->
+	<bean id="aitv" class="iocDI01_xml.AiTVs" lazy-init="true">
+		<property name="speaker" ref="sp"/> <!-- xxx(name)을 이용해 setxxx()을 검색함. 꼭 setter가 존재해야 함  -->
+		<property name="color" value="Silver"/>
+		<property name="price" value="789000"/>
+	</bean>
+</beans>
