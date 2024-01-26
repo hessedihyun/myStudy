@@ -35,4 +35,5 @@ public class MemberService {
 	public int delete(String id) {
 		return dao.delete(id);
 	}
+	
 } // class

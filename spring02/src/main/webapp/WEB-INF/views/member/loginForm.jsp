@@ -31,7 +31,7 @@
 <hr>
 <c:if test="${not empty requestScope.message}">
 => ${requestScope.message}
-</c:if><br><br>
+</c:if>
 &nbsp;<a href="/spring02/home">Home</a>&nbsp;
 &nbsp;<a href="javascript:history.go(-1)">이전으로</a>&nbsp;
 &nbsp;<a href="joinForm">회원가입</a>&nbsp;

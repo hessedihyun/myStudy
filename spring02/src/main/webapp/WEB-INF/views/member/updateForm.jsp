@@ -55,5 +55,11 @@
 		</tr>
 	</table>
 </form>
+<hr>
+<c:if test="${not empty requestScope.message}">
+	=> ${requestScope.message}
+</c:if>
+<hr>
+&nbsp;<a href="javascript:history.go(-1)">이전으로</a>&nbsp;
 </body>
 </html>
