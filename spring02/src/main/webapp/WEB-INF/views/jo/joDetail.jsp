@@ -41,16 +41,21 @@
 <c:if test="${not empty requestScope.jmlist}">
 <%@ include file="jmList.jsp" %>
 </c:if>
-<hr>
 <c:if test="${empty requestScope.jmlist}">
+<hr>=> 해당 조에는 아직 멤버가 없습니다.<br>
+</c:if>
+<hr>
+<%-- <c:if test="${empty requestScope.jmlist}">
 &nbsp;<a href="jmList?jno=${requestScope.jdetail.jno}">조멤버</a>&nbsp;
-</c:if>
-<c:if test="${not empty requestScope.jmlist}">
+</c:if> --%>
+<%-- <c:if test="${not empty requestScope.jmlist}">
 &nbsp;<a href="javascript:history.go(-1)">JMList닫기</a>&nbsp;
-</c:if>
+</c:if> --%>
 &nbsp;<a href="joInsert">조등록</a>&nbsp;
 &nbsp;<a href="joUpdate?jno=${requestScope.jdetail.jno}">조수정</a>&nbsp;
 &nbsp;<a href="delete?jno=${requestScope.jdetail.jno}">조삭제</a>&nbsp;
+&nbsp;<a href="#">멤버등록</a>&nbsp;
+&nbsp;<a href="joList">JLIST</a>&nbsp;
 <hr>
 &nbsp;<a href="/spring02/home">Home</a>&nbsp;
 &nbsp;<a href="javascript:history.go(-1)">이전으로</a>&nbsp;

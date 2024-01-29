@@ -13,5 +13,5 @@ public class JoDTO {
 	private String captain;
 	private String project;
 	private String slogan;
-	private String cname;
+	private String cname; // 필요시 사용 - setter/getter, toString, default 생성자 등 만들 필요 없음(lombok)
 }

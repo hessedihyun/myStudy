@@ -29,7 +29,11 @@ then you must be a 'master'
 		</tr>
 		<tr>
 			<th bgcolor="Lavender">CAPTAIN</th>
-			<td><input type="text" placeholder="조장이름" name="captain" id="captain" required="required"/></td>
+			<td><input type="text" placeholder="조장아이디" name="captain" id="captain" required="required"/></td>
+		</tr>
+		<tr>
+			<th bgcolor="Lavender">CNAME</th>
+			<td><input type="text" placeholder="조장이름" name="cname" id="cname" required="required"/></td>
 		</tr>
 		<tr>
 			<th bgcolor="Lavender">project</th>

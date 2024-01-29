@@ -7,10 +7,12 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import com.ncs.spring02.domain.JoDTO;
 import com.ncs.spring02.domain.MemberDTO;
 
-@Component
+@Repository
 public class JoDAO {
 	private static Connection cn = DBConnection.getConnection();
 	private static PreparedStatement pst;

@@ -1,6 +1,7 @@
 package com.ncs.spring02.model;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import com.ncs.spring02.domain.MemberDTO;
+
 @Component
 public class MemberDAO {
 	private static Connection cn = DBConnection.getConnection();
@@ -70,8 +72,7 @@ public class MemberDAO {
 				} while(rs.next());
 			} else {
 				return null;
-			}
-			} catch (Exception e){
+			}} catch (Exception e){
 			System.out.println("** selectOne Exception => **" + e.toString());
 			return null;
 		}

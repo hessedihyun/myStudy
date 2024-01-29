@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ncs.spring02.domain.JoDTO;
-import com.ncs.spring02.domain.MemberDTO;
 import com.ncs.spring02.service.JoService;
+import com.ncs.spring02.service.MemberService;
 
 @Controller
 @RequestMapping(value="/jo")
@@ -16,6 +16,7 @@ public class JoController {
 	
 	@Autowired(required=false)
 	JoService service;
+	MemberService mservice;
 	
 	@RequestMapping(value="/joList", method=RequestMethod.GET)
 	public void jlist(Model model) {
@@ -27,6 +28,8 @@ public class JoController {
 		System.out.println("여기");
 		String uri="jo/joDetail";
 		model.addAttribute("jdetail", service.selectOne(Integer.parseInt(jno)));
+		model.addAttribute("jmlist", service.selectMember(Integer.parseInt(jno)));
+		model.addAttribute("jno", jno);
 		return uri;
 	} // jdetail
 	
@@ -37,6 +40,7 @@ public class JoController {
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	public String insert(Model model, JoDTO dto) {
 		String uri="redirect:joList";
+		System.out.println("여기까지!!!!!");
 		int rs = service.insert(dto);
 		if(rs>0) {
 			// 조만들기 성공
@@ -83,12 +87,16 @@ public class JoController {
 		return uri;
 	} // jo delete
 	
-	@RequestMapping(value="/jmList", method=RequestMethod.GET)
-	public String jmList(Model model, String jno) {
-		model.addAttribute("jdetail",service.selectOne(Integer.parseInt(jno)));
-		model.addAttribute("jmlist", service.selectMember(Integer.parseInt(jno)));
-		String uri="jo/joDetail";
-		return uri;
-	} // jmlist
+//	@RequestMapping(value="/jmList", method=RequestMethod.GET)
+//	public String jmList(Model model, String jno) {
+//		model.addAttribute("jdetail",service.selectOne(Integer.parseInt(jno)));
+//		if(service.selectMember(Integer.parseInt(jno))!=null) {
+//			model.addAttribute("jmlist", service.selectMember(Integer.parseInt(jno)));
+//		} else {
+//			model.addAttribute("message", "해당 조에 아직 멤버가 존재하지 않습니다.");
+//		}
+//		String uri="jo/joDetail";
+//		return uri;
+//	} // jmlist
 	
 } // JoController class

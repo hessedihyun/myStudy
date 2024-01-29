@@ -52,6 +52,7 @@
 <br><hr>
 &nbsp;<a href="member/memberList">MList</a>&nbsp;
 &nbsp;<a href="jo/joList">JList</a>&nbsp;
+&nbsp;<a href="board/boardList">BList</a>&nbsp;
 </body>
 </html>
 <!-- Spring은 원천적으로 절대경로로 사용하지 않음. member 안에 있는 jsp 파일명으로 href를 맞춰주면 된다. 편리함! -->

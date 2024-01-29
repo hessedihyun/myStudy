@@ -11,6 +11,7 @@
 </head>
 <body>
 <h3>** Spring02_MVC02 JMList **</h3>
+<h3>=> This is <span style="color:red;">${jno}조</span> Members</h3>
 <table border="1" style="width:100%; text-align: center; text-wrap: nowrap;">
 	<tr bgcolor="LightSalmon">
 		<th>Jno</th>
