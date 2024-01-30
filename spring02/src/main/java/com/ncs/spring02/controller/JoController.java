@@ -34,7 +34,7 @@ public class JoController {
 	} // jdetail
 	
 	@RequestMapping(value="/joInsert", method=RequestMethod.GET)
-	public void joInsert(Model model) {
+	public void joInsert() {
 	} // joInsert로 가기
 	
 	@RequestMapping(value="/insert", method=RequestMethod.POST)

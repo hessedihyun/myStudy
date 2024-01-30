@@ -25,7 +25,9 @@ public class BoardDAO {
 	
 	// ** selectList
 	public List<BoardDTO> selectList() {
-		sql="select * from board order by seq desc";
+		// sql="select * from board order by seq desc";
+		sql="select * from board order by root desc, step asc";
+		// => 답글 달기 추가 후 출력 순서 수정
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
 			pst=cn.prepareStatement(sql);
@@ -85,7 +87,11 @@ public class BoardDAO {
 		} // try-catch
 	} // board selectOne
 	
-	// ** insert
+	// ** insert (원글 입력)
+	// => 입력 컬럼 : id, title, content
+	// => default 값 : regdate, cnt, step, indent
+	// => root : seq와 동일한 값
+	// => Auto_Inc : seq(계산 : auto보다 max(seq)를 이용해서 직접 계산)
 	public int insert(BoardDTO dto) {
 		sql="insert into board values("
 				+ "(select * from (select ifNull(max(seq),0)+1 from board) as temp),"
@@ -101,13 +107,81 @@ public class BoardDAO {
 			System.out.println("** Board insert => " + e.toString());
 			return 0;
 		}
-	}
+	} // insert
+	
+	   // ** replyInsert : 답글입력
+	   // => seq: IFNULL 이용
+	   // => 입력 컬럼: id, title, content, root, step, indent
+	   // => JDBC subQuery 구문 적용시 주의사항
+	   //     -> MySql: select 구문으로 한번더 씌워 주어야함 (insert 의 경우에도 동일) (오라클은 아님)   
+	   // => stepUpdate 가 필요함
+	   //    댓글 입력 성공후 실행
+	   //     -> 현재 입력된 답글의 step 값은 수정되지 않도록 sql 구문의 조건 주의    
+	   // => boardList의 출력순서 확인
+	   //    ~~~ order by root desc, step asc
+	public int rinsert(BoardDTO dto) {
+		sql="insert into board(seq, id, title, content, root, step, indent) values("
+				+ "(select * from (select ifNull(max(seq),0)+1 from board) as temp)"
+				+ ",?,?,?,?,?,?)";
+		try {
+			pst=cn.prepareStatement(sql);
+			pst.setString(1, dto.getId());
+			pst.setString(2, dto.getTitle());
+			pst.setString(3, dto.getContent());
+			pst.setInt(4, dto.getRoot());
+			pst.setInt(5, dto.getStep());
+			pst.setInt(6, dto.getIndent());
+			pst.executeUpdate(); // 답글등록 성공 -> stepUpdate(별도의 메소드)
+			System.out.println("** stepUpdate count => " + stepUpdate(dto));
+			return 1;
+		} catch (Exception e) {
+			System.out.println("** Reply insert Exception => " + e.toString());
+			return 0;
+		} // try-catch
+	} // rinsert
+	// ** stepUpdate : step 값 증가
+	// => 조건
+	//    -> root 동일 and step >= and 새글 제외
+	public int stepUpdate(BoardDTO dto) {
+		sql="update board set step=step+1 where root=? and step>=? "
+				+ "and seq <> (select * from (select ifNull(max(seq),0) from board) as temp)";
+		try {
+			pst=cn.prepareStatement(sql);
+			pst.setInt(1, dto.getRoot());
+			pst.setInt(2, dto.getStep());
+			return pst.executeUpdate(); // 수정된 Data 갯수 return
+		} catch (Exception e) {
+			System.out.println("** stepUpdate Exception => " + e.toString());
+			return 0;
+		}
+	} // stepUpdate
 	// ** update
 	public int update(BoardDTO dto) {
-		return 0;
-	}
+		sql="update board set title=?, content=?, cnt=? where seq=?";
+		try {
+			pst=cn.prepareStatement(sql);
+			pst.setString(1,dto.getTitle());
+			pst.setString(2,dto.getContent());
+			pst.setInt(3, dto.getCnt());
+			pst.setInt(4, dto.getSeq());
+			System.out.println(dto);
+			return pst.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(" ** board update Exception => "+e.toString());
+			return 0;
+		}
+	} // update
+	
 	// ** delete
 	public int delete(int seq) {
-		return 0;
-	}
+		sql="delete from board where seq=?";
+		try {
+			pst=cn.prepareStatement(sql);
+			pst.setInt(1, seq);
+			return pst.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(" ** board delete Exception => "+e.toString());
+			return 0;
+		}
+	} // board delete
 } // class 

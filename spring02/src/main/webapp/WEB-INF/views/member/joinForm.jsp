@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>** joinForm **</title>
+<link rel="stylesheet" type="text/css"
+	  href="/spring02/resources/myLib/myStyle.css">
 </head>
 <body>
 <h2>** 회원가입 **</h2>

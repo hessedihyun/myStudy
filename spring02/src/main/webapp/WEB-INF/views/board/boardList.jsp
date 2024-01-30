@@ -8,10 +8,14 @@
 <title>** Spring MVC2 BoardList **</title>
 <link rel="stylesheet" type="text/css"
 	  href="/spring02/resources/myLib/myStyle.css">
+	  
 </head>
 <body>
 <h2>** Spring MVC2 BoardList **</h2>
-<table border="1" style="width:100%; text-align: center; text-wrap: nowrap;">
+<c:if test="${not empty requestScope.message}">
+=> ${requestScope.message}<br><hr>
+</c:if>
+<table border="1" style="width:100%; text-wrap: nowrap;">
 	<tr bgcolor="Salmon">
 		<th>Seq</th>
 		<th>Title</th>
@@ -24,6 +28,14 @@
 			<tr>
 			<td>${b.seq}</td>
 			<td>
+				<!-- 답글 등록 후 Title 출력 전에 들여쓰기 추가 -->
+				<c:if test="${b.indent>0}">
+					<c:forEach begin="1" end="${b.indent}">
+						<span>&nbsp;&nbsp;</span>
+					</c:forEach>
+					<span style="color:blue;">re..</span>
+				</c:if>
+				<!-- 로그인 한 경우에만 글 내용 볼 수 있도록 -->
 				<c:if test="${not empty sessionScope.loginID}">
 					<a href="detail?jCode=D&seq=${b.seq}">${b.title}</a>
 				</c:if>
@@ -44,8 +56,8 @@
 <hr>
 <c:if test="${not empty sessionScope.loginID}">
 &nbsp;<a href="boardInsert?">글등록</a>&nbsp;
-</c:if>
 <hr>
+</c:if>
 &nbsp;<a href="/spring02/home">Home</a>&nbsp;
 &nbsp;<a href="javascript:history.go(-1)">이전으로</a>&nbsp;
 </body>

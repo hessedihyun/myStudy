@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>** Revise my Information details **</title>
+<link rel="stylesheet" type="text/css"
+	  href="/spring02/resources/myLib/myStyle.css">
 <!-- disabled는 서버로 값이 나가지 않음. readonly는 서버로 값이 같이 나감. -->
 </head>
 <body>

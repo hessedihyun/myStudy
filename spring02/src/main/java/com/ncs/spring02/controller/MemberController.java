@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -285,14 +286,5 @@ public class MemberController {
 			}
 			return uri;
 		} // delete
-		
-			//	예전꺼
-			//	// ** Member Detail
-			//	@RequestMapping(value ="/mdetailsp", method = RequestMethod.GET)
-			//    public String mDetail(Model model) {
-			//    	model.addAttribute("mdetail", service.selectOne("merci"));
-			//        return "member/memberDetail";
-			//    }
-	
 	
 } // class
