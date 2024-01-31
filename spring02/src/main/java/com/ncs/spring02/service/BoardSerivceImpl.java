@@ -20,7 +20,7 @@ public class BoardSerivceImpl implements BoardService {
 	@Override
 	public int update(BoardDTO dto) {return dao.update(dto);}
 	@Override
-	public int delete(int seq) {return dao.delete(seq);}
+	public int delete(BoardDTO dto) {return dao.delete(dto);}
 	@Override
 	public int rinsert(BoardDTO dto) {return dao.rinsert(dto);}
 } // class

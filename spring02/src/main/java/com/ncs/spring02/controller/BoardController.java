@@ -83,12 +83,12 @@ public class BoardController {
 		return uri;
 	} // board update
 	@GetMapping("/delete")
-	public String delete(int seq, Model model) {
+	public String delete(BoardDTO dto, Model model) {
 		String uri="redirect:boardList";
-		if(service.delete(seq)>0) {
-			model.addAttribute("message", seq+"번 글 삭제가 정상적으로 완료되었습니다.");
+		if(service.delete(dto)>0) {
+			model.addAttribute("message", dto.getSeq()+"번 글 삭제가 정상적으로 완료되었습니다.");
 		} else {
-			model.addAttribute("message", seq+"번 글 삭제 오류 발생! 다시 시도해주세요.");
+			model.addAttribute("message", dto.getSeq()+"번 글 삭제 오류 발생! 다시 시도해주세요.");
 			uri="board/boardDetail";
 		}
 		return uri;

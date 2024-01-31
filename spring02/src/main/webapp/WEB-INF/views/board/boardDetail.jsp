@@ -49,7 +49,7 @@
 <c:if test="${sessionScope.loginID==requestScope.bdetail.id}">
 <br>
 &nbsp;<a href="detail?jCode=U&seq=${requestScope.bdetail.seq}">글수정</a>&nbsp;
-&nbsp;<a href="delete?seq=${requestScope.bdetail.seq}">글삭제</a>&nbsp;
+&nbsp;<a href="delete?seq=${requestScope.bdetail.seq}&root=${bdetail.root}">글삭제</a>&nbsp;
 <br>
 </c:if>
 <br>
