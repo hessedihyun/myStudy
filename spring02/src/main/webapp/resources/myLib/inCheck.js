@@ -90,8 +90,19 @@ _ : _ 문자
 // 2) Password
 function pwCheck() {
    let pw=document.getElementById('password').value;
-
-   return true;
+   if(pw.length<4 || pw.length>10){
+      document.getElementById('pMessage').innerHTML='password는 4~10 글자입니다.';
+      return false;
+   } else if(pw.replace(/[a-z.0-9.!-*.@]/gi,'').length>0) { // => 영문, 숫자, 특수문자로만 구성
+      document.getElementById('pMessage').innerHTML='password는 영문, 숫자, 특수문자만 가능합니다.';
+      return false;
+   // } else if() { // => 특수문자는 반드시 포함
+   //    document.getElementById('pMessage').innerHTML='password는 영문, 숫자, 특수문자만 가능합니다.';
+   //    return false;
+   } else {
+      document.getElementById('pMessage').innerHTML='';
+      return true;
+   }
 }
 // 3) Password2
 function pw2Check() {
