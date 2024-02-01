@@ -85,7 +85,7 @@
 	미국 표준 기술 연구소(NIST)는 SHA-3 으로 명명된 새로운 암호화 해시 알고리즘에 대한 후보를 공모하였다.
 =============================
 
-*** 스프링시큐리티  
+*** 스프링시큐리티
 
 => 스프링 시큐리티 라이브러리는 인증/권한인가 등의 처리가 필요할 때 사용하라고 만든 Spring의 패키지이다.
 => 그 중에서 password를 암호화 하는 방법, PasswordEncoder를 사용한다.
@@ -95,7 +95,7 @@
 	public interface PasswordEncoder {
 
 	    String encode(CharSequence var1);
-	    // 패스워드를 암호화 할 때 사용
+	    // 패스워드를 암호화 할 때 사용 (-> 다이제스트를 만듦)
 
 	    boolean matches(CharSequence var1, String var2);
 	    // 사용자에게 입력받은 패스워드를 비교할 때 사용
@@ -111,17 +111,17 @@
 -----------------------------------------------
 
 => 구현 객체
-     -> Pbkdf2PasswordEncoder
+    1) -> Pbkdf2PasswordEncoder
 	- PBKDF2 해싱을 사용함.
 	- 해싱+salt 를 동시에 진행한다 (Bcrypt와 동일) 다만 차이점은 아래와 같다
 	   * Pbkdf2PasswordEncoder : salt가 8bytes 랜덤 값이다
-	   * BCryptPasswordEncoder  : salt가 72bytes 랜덤값이다
+	   * ★★★ BCryptPasswordEncoder  : salt가 72bytes 랜덤값이다
 	그러므로 bcrypt가 좀더 안전하기 때문에
 	( 더 정확하게 표현하면 collision_충돌 이 발생할 수학적 확률이 더 낮음)
                Spring의 기본 PasswordEncoder는 bcrypt를 권장하는 것으로 보인다	
-      -> BCryptPasswordEncoder 
+    2) -> ★★★ BCryptPasswordEncoder 
 
-      -> SCryptPasswordEncoder
+    3) -> SCryptPasswordEncoder
 	- Scrypt 해시 함수를 사용하고, 추가적으로 cpu와 memory의 cost parameter를 넘길수 있게 되어있음.
 	- Scrypt는 실제로 Salsa20 라는 해싱방식을 사용함.
 	- Javadoc에는 보안문제가 존재하여 이 방식을 추천하지 않는다고 쓰여있음.  
@@ -131,7 +131,7 @@
         
       -> StandardPasswordEncoder : sha 해쉬 알고리즘을 이용
  
-=> BCryptPasswordEncoder
+=> ★★★ BCryptPasswordEncoder 
      ->	BCrypt 해시함수를 사용한 구현체이고,  
 	해시와 Salt 처리를 동시에 진행 하므로 입력값이 같더라도 매번 다른 다이제스트를 생성하여 리턴한다.
      -> 	생성자 호출시 strength(암호의 강도)를 설정할 수 있으며, 이는 round(반올림자리수)값을 설정하는 부분이다.
