@@ -129,6 +129,24 @@ public class MemberController {
 	
 	@Autowired(required=false)
 	MemberService service;
+	
+	// ** ID 중복확인
+		@GetMapping("/idDupCheck")
+		public void idDupCheck(@RequestParam("id") String id, Model model) {
+			// 1) newID 존재여부 확인 & 결과 처리
+			if(service.selectOne(id) !=null) {
+				// => 사용 불가능
+				model.addAttribute("idUse", "F");
+			} else {
+				model.addAttribute("idUse", "T");
+				// => 사용 가능
+			}
+			
+			
+			
+		} // idDupCheck
+	
+	
 	// value 요청 값 잘못 : 404, requestMethod : 405, 인증 잘못 : 403
 	
 	// ** Login Form 출력

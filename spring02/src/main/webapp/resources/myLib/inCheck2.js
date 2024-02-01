@@ -1,12 +1,3 @@
-/*
-** 이클립스 자바스크립트 파일 내용이 흑백으로 나올때... 컬러로 고치기 
-=> https://creampuffy.tistory.com/66
-
-윈도우 - 프레퍼런스 - 제네럴 - 에디터스 - 파일 어소시에이션 - 
-add - *.js - 밑에 제네릭 텍스트 에디터 디폴트
-
-******************************************** */
-
 /**
 ** 입력값의 무결성 확인
 ** member 무결성 확인사항
@@ -35,7 +26,6 @@ add - *.js - 밑에 제네릭 텍스트 에디터 디폴트
             return false;
         }    
  */
-
 "use strict"
 // 1) ID
 // => 길이, 영문과 한글
@@ -57,7 +47,7 @@ function idCheck() {
       document.getElementById('iMessage').innerHTML='';
       return true;
    }
-} // idCheck
+}
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  <!-- 
  ** Good 정리
@@ -122,7 +112,7 @@ function pwCheck() {
       document.getElementById('pMessage').innerHTML='';
       return true;
    }
-} // pwCheck
+}
 // 3) Password2
 function pw2Check() {
    let pw=document.getElementById('password').value;
@@ -134,82 +124,28 @@ function pw2Check() {
       document.getElementById('p2Message').innerHTML='';
       return true;
    }
-} //pw2Check
+}
 // 4) Name
 function nmCheck() {
    let name=document.getElementById('name').value;
-   if(name.length<2){
-		document.getElementById('nMessage').innerHTML='이름은 2글자 이상이어야 합니다.';
-		return false;
-	} else if(name.replace(/[a-z.가-힣]/gi,'').length>0) {
-		document.getElementById('nMessage').innerHTML='이름은 영문과 한글로만 입력 가능합니다.';
-		return false;
-	} else {
-		document.getElementById('nMessage').innerHTML='';
-		return true;
-	}
-} // nmCheck
+
+   return true;
+}
 // 5) Age
-// => Number.isInteger(n) : n이 정수일 때만 true 
-//	  -> 단, n이 숫자 타입이어야 한다. 
-//    -> value 속성의 값은 문자 Type이므로 숫자화_parseInt가 필요함
-//    -> 단, parseInt(age) 사용시 주의
-// 		 - 실수의 경우에는 정수만 사용 (123.56->123)
-//       - 숫자 뒷쪽에 문자가 포함되면 앞쪽의 숫자만 가져와서 정수 return(123abc-> 123)
-//       - 문자로 시작하면, 문자로 취급. NaN(Not a Number)를 return
-// => 숫자 아닌 값이 있는지 확인, Number.isInteger(....) 확인
 function ageCheck() {
    let age=document.getElementById('age').value;
-   console.log(`** parseInt(age) => ${parseInt(age)}`);
-   console.log(`** Number.isInteger(age) => ${Number.isInteger(age)}`);
-   console.log(`** Number.isInteger(parseInt(age)) => ${Number.isInteger(parseInt(age))}`);
-   if(age.replace(/[^0-9]/gi,'').length< age.length || !Number.isInteger(parseInt(age))) {
-		document.getElementById('aMessage').innerHTML='나이는 숫자(정수)로만 입력 가능합니다.';
-		return false;
-	} else {
-		document.getElementById('aMessage').innerHTML='';
-		return true;
-	}
-} // ageCheck
+
+   return true;
+}
 // 6) Point
-// => 정수 또는 실수 허용 (범위 : 100 ~ 10000)
-// => parseFloat(point)
-// 	  -> 오류 또는 입력값이 없는 경우 NaN return
-//    -> 확인 : Number.isNaN(parseFloat(point))
-//    -> 단, 숫자로 시작하면 뒤쪽에 문자가 섞여 있어도 숫자값만 사용함(NaN을 return 하지않음)
 function poCheck() {
    let point=document.getElementById('point').value;
-   console.log(`** parseFloat(point) => ${parseFloat(point)}`);
-   console.log(`** Number.isNaN(point) => ${Number.isNaN(point)}`);
-   console.log(`** Number.isNaN(parseFloat(point)) => ${Number.isNaN(parseFloat(point))}`);
-   console.log(`** point.match(/\./g) => ${point.match(/\./g)}`);
-   console.log(`** point.match(/\./g).length => ${point.match(/\./g).length}`);
-   // => 숫자 아닌 값이 있는지 확인, Number.isNaN(...) 적용
-   // => 단, 소숫점은 허용
-   //    (비교값으로 소수점을 사용하기 위해서는 "\." 으로 표기함)
-   if(point.replace(/[^0-9.\.]/g,'').length< point.length || Number.isNaN(parseFloat(point))) {
-	 	document.getElementById('oMessage').innerHTML='포인트는 숫자(실수까지 가능)로만 입력 가능합니다.';
-    	return false;
-   	} else if (parseFloat(point)<100 || parseFloat(point)>10000) {
-	 	document.getElementById('oMessage').innerHTML='포인트 범위는 100~10000 입니다.';
-    	return false;
-	} else if (point.match(/\./g).length>1) {
-		document.getElementById('oMessage').innerHTML='포인트 소수점 오류(실수 형태)를 확인해주세요.';
-    	return false;
-	} else {
-    	document.getElementById('oMessage').innerHTML='';
-     	return true;
-	}
-}
 
+   return true;
+}
 // 7) Birthday
 function bdCheck() {
    let birthday=document.getElementById('birthday').value;
-	if(birthday.length!=10) {
-		document.getElementById('bMessage').innerHTML='Birthday(yyyy-mm-dd) 입력 확인해주세요.';
-	    return false;
-	} else {
-		document.getElementById('bMessage').innerHTML='';
-	    return true;
-	}
+
+   return true;
 }

@@ -11,6 +11,25 @@
 <script src="/spring02/resources/myLib/inCheck.js"></script>
 <script>
 "use strict"
+// ** ID 중복확인
+// => UI 개선사항
+// => 중복확인 버튼 추가
+//    처음 : 중복확인버튼_enable / submit_disable
+// => 중복확인 완료후 submit 이 가능하도록
+//    중복확인버튼_disable / submit_enable
+// => 중복확인 기능 : function idDupCheck()
+//    id입력값의 무결성점검 -> id 확인요청 -> 서버로 전송 -> id , selectOne 결과 -> response: 사용가능/불가능 
+// => 서버측 : 컨트롤러에 idDupCheck 요청을 처리하는 매핑메서드, view_Page(팝업창) 작성   
+function idDupCheck() {
+	// 1) id 입력값의 무결성 점검
+	if( !iCheck ) iCheck = idCheck();
+	else {
+	// 2) 서버로 id 확인 요청 -> 결과는 view_Page(팝업창) 으로
+		let url="idDupCheck?id=" + document.getElementById('id').value;
+		window.open(url,'_blank','width=400,height=300,resizable=yes,scrollbars=yes,toolbar=no,menubar=yes');
+	}
+}
+
 // ** 화살표 함수
 // => 익명함수를 간단하게 표기
 //    function(){....}  
@@ -64,16 +83,6 @@ onload=function() {
 			e.preventDefault();
 			// => form에서는
 			// => enter 누르면 자동 submit 발생이 되기 때문에 기존 액션(이벤트)를 제거함.
-			document.getElementById('password').focus();
-		} // if
-	});
-	// -> 무결성 점검
-    document.getElementById('id').addEventListener('focusout',()=>{ iCheck=idCheck(); });
-	// => Password
-    document.getElementById('id').addEventListener('keydown',
-	(e)=>{
-		if(e.which==13) {
-			e.preventDefault();
 			document.getElementById('password').focus();
 		} // if
 	});
@@ -208,6 +217,7 @@ function inCheck() {
 		<tr height="40">
 			<th><label for="id">ID</label></th>
 			<td><input type="text" placeholder="영문,숫자 4~10글자" name="id" id="id" required="required" size="20"/>
+				<button type="button" onclick="idDupCheck()" id="idDup">ID중복확인</button>
 				<br><span id="iMessage" class="eMessage"></span>
 			</td>
 		</tr>
@@ -270,7 +280,7 @@ function inCheck() {
 	</table>
 	<br>
 	<div>
-		<button type="submit" onclick="return inCheck()" id="submitTag">가입</button>&nbsp;&nbsp;
+		<button type="submit" onclick="return inCheck()" id="submitTag" disabled="disabled">가입</button>&nbsp;&nbsp;
 		<button type="reset" >취소</button>
 	</div>
 	<!-- => Tag의 onclick 이벤트를 작성하고, onclick 이벤트핸들러가 가지고있던
