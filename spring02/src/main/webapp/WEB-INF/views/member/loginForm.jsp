@@ -25,6 +25,9 @@ onload=function() {
 		} // if
 	});
     document.getElementById('id').addEventListener('focusout',()=>{ iCheck=idCheck(); });
+    
+    
+    
     //
     document.getElementById('password').addEventListener('keydown',
 	(e)=>{
@@ -38,6 +41,7 @@ onload=function() {
             //else document.getElementById('myForm').submit();
 		} // if
 	});
+    document.getElementById('password').addEventListener('focusout',()=>{ pCheck=pwCheck(); });
 } //onload
 function inCheck() {
 	
@@ -88,6 +92,7 @@ function inCheck() {
 &nbsp;<a href="/spring02/home">Home</a>&nbsp;
 &nbsp;<a href="javascript:history.go(-1)">이전으로</a>&nbsp;
 &nbsp;<a href="joinForm">회원가입</a>&nbsp;
+&nbsp;<a href="searchPW">패스워드찾기</a>&nbsp;
 </div>
 </div>
 </body>

@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ncs.spring02.domain.BoardDTO;
 import com.ncs.spring02.service.BoardService;
 import lombok.AllArgsConstructor;
+import pageTest.Criteria;
+import pageTest.PageMaker;
 
 @Controller
 @AllArgsConstructor
@@ -21,6 +23,27 @@ public class BoardController {
 	
 	// @Autowired //@AllArgs 있어서 주석처리
 	BoardService service;
+	
+	// ** Board_Paging
+	@GetMapping("/bPageList")
+	public void bPageList(Model model, Criteria cri, PageMaker pageMaker) {
+		// 1) Criteria 처리
+		// => currPage, rowsPerPage 값들은 Parameter로 전달되어 자동으로 cri에 set되어 있음
+		cri.setSnoEno();
+		
+		// 2) Service
+		// => 출력 대상인 Rows를 select
+		model.addAttribute("blist", service.bPageList(cri));
+		
+		
+		// 3) View처리 : PageMaker를 이용하기
+		// => cri, totalRowsCount (Read from DB)
+		pageMaker.setCri(cri);
+		pageMaker.setTotalRowsCount(service.totalRowsCount(cri));
+		model.addAttribute("pageMaker", pageMaker);
+		
+	} // bPageList.jsp로 이동하기
+	
 	
 	// ** Board List
 	@GetMapping("/boardList") // method까지 모두 mapping 시켜줌 > RequestMapping보다 효과적

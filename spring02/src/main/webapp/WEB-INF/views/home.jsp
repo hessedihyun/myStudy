@@ -46,7 +46,8 @@
 &nbsp;<a href="member/memberList">MList</a>&nbsp;
 &nbsp;<a href="jo/joList">JList</a>&nbsp;
 &nbsp;<a href="board/boardList">BList</a>&nbsp;
-&nbsp;<a href="bcrypt">BCrypt</a>&nbsp;
+&nbsp;<a href="bcrypt">BCrypt</a><br>
+&nbsp;<a href="board/bPageList">BPaging</a>&nbsp;
 </div>
 
 </body>

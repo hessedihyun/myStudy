@@ -26,6 +26,10 @@
 			<td>${requestScope.jdetail.captain}</td>
 		</tr>
 		<tr>
+			<th bgcolor="Lavender">CNAME</th>
+			<td>${requestScope.jdetail.cname}</td>
+		</tr>
+		<tr>
 			<th bgcolor="Lavender">project</th>
 			<td>${requestScope.jdetail.project}</td>
 		</tr>
@@ -54,7 +58,7 @@
 &nbsp;<a href="joInsert">조등록</a>&nbsp;
 &nbsp;<a href="joUpdate?jno=${requestScope.jdetail.jno}">조수정</a>&nbsp;
 &nbsp;<a href="delete?jno=${requestScope.jdetail.jno}">조삭제</a>&nbsp;
-&nbsp;<a href="#">멤버등록</a>&nbsp;
+&nbsp;<a href="jmInsert?currjno=${requestScope.jdetail.jno}">멤버등록</a>&nbsp;
 &nbsp;<a href="joList">JLIST</a>&nbsp;
 <hr>
 &nbsp;<a href="/spring02/home">Home</a>&nbsp;

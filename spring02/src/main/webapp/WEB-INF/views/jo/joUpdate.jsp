@@ -27,6 +27,10 @@
 			<td><input type="text" name="captain" id="captain" value="${requestScope.jdetail.captain}"/></td>
 		</tr>
 		<tr>
+			<th bgcolor="Lavender">CNAME</th>
+			<td><input type="text" name="cname" id="cname" value="${requestScope.jdetail.cname}"/></td>
+		</tr>
+		<tr>
 			<th bgcolor="Lavender">project</th>
 			<td><input type="text" name="project" id="project" value="${requestScope.jdetail.project}"/></td>
 		</tr>

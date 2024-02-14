@@ -16,25 +16,27 @@
 	<tr bgcolor="LightSalmon">
 		<th>Jno</th>
 		<th>ID</th>
-		<th>Password</th>
 		<th>Name</th>
 		<th>Age</th>
 		<th>Info</th>
 		<th>Point</th>
 		<th>Birthday</th>
 		<th>추천인</th>
+		<th>이미지</th>
 	</tr>
 	<c:if test="${not empty requestScope.jmlist}">
 		<c:forEach var="m" items="${requestScope.jmlist}">
 			<td>${m.jno}</td>
 			<td>${m.getId()}</td>
-			<td>${m.password}</td>
 			<td>${m.name}</td>
 			<td>${m.age}</td>
 			<td>${m.info}</td>
 			<td>${m.point}</td>
 			<td>${m.birthday}</td>
 			<td>${m.rid}</td>
+			<td>
+			<img alt="MYIMAGE" src="/spring02/resources/uploadImages/${requestScope.m.uploadfile}" width="70" height="60">
+			</td>
 			<tr>
 		</c:forEach>
 	</c:if>

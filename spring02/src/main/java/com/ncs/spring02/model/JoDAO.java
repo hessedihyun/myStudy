@@ -19,6 +19,8 @@ public class JoDAO {
 	private static ResultSet rs;
 	private static String sql;
 	
+	// ** memberInsert
+	
 	// ** Jo selectList
 	public List<JoDTO> selectList() {
 	 // sql="select * from Jo";

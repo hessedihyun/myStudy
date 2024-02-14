@@ -212,8 +212,8 @@ function inCheck() {
 <body>
 <h2>** 회원가입 **</h2>
 <br>
-<form action="join" method="post">
-	<table>
+<form action="join" method="post" enctype="multipart/form-data"> <!-- enctype="multipart/form-data" -->
+	<table> 
 		<tr height="40">
 			<th><label for="id">ID</label></th>
 			<td><input type="text" placeholder="영문,숫자 4~10글자" name="id" id="id" required="required" size="20"/>
@@ -246,14 +246,18 @@ function inCheck() {
 			</td>
 		</tr>
 		<tr height="40">
-			<th><label for="jno">조번호</label>
+			<th><label for="jno">조이름</label>
 			<td>
 				<select name="jno" id="jno">
-					<option value="1" ${requestScope.myInfo.jno==1? "selected":""}>1조</option>
+					<c:forEach items="${requestScope.myInfo}" var="info" >
+						<option value="${info.jno}" ${info.jno==1? "selected":""}>${info.jname}</option>
+					</c:forEach>
+					<!-- <option value="0">미정</option> -->
+					<%-- <option value="1" ${requestScope.myInfo.jno==1? "selected":""}>1조</option>
 					<option value="2" ${requestScope.myInfo.jno==2? "selected":""}>2조</option>
 					<option value="3" ${requestScope.myInfo.jno==3? "selected":""}>3조</option>
 					<option value="4" ${requestScope.myInfo.jno==4? "selected":""}>4조</option>
-					<option value="7" ${requestScope.myInfo.jno==7? "selected":""}>7조</option>
+					<option value="7" ${requestScope.myInfo.jno==7? "selected":""}>7조</option> --%>
 				</select>
 			</td>
 		</tr>
@@ -277,6 +281,27 @@ function inCheck() {
 			<th><label for="rid">추천인</label>
 			<td><input type="text" placeholder="추천인을 입력하세요" name="rid" id="rid"/></td>
 		</tr>
+		<tr height="40">
+			<th><label for="uploadfilef">이미지첨부</label>
+			<td>
+				<img alt="MYIMAGE" src="" class="select_img" width=80 height=100/><br>
+				<input type="file" name="uploadfilef" id="uploadfilef"/></td>
+				<script>
+			        document.getElementById('uploadfilef').onchange=function(e){
+				         if(this.files && this.files[0]) {
+				            let reader = new FileReader;
+				            reader.readAsDataURL(this.files[0]);
+				             reader.onload = function(e) {
+				                // => jQuery를 사용하지 않는경우 
+				                document.getElementsByClassName('select_img')[0].src=e.target.result;
+				                
+				               //$(".select_img").attr("src", e.target.result)
+				               //            .width(70).height(90); 
+				               } // onload_function
+				          } // if   
+			        }; //change  
+		        </script>
+		</tr>
 	</table>
 	<br>
 	<div>
@@ -297,6 +322,18 @@ function inCheck() {
              
 	-->
 </form>
+<!-- ** FileUpLoad Form  **
+		=> form과 table Tag 사용 시 주의사항 : form 내부에 table 사용해야 함
+		-> form 단위 작업 시 인식 안됨
+		-> JQ의 serialize, FormData의 append all 등 
+		=> method="POST" : 255 byte 이상 대용량 전송 가능 하므로
+		=> <form enctype="속성값">
+		   <form> 태그의 데이터(input의 value)가 서버로 제출될 때 해당 데이터가 인코딩되는 방법을 명시함.
+		=> enctype="multipart/form-data" : 화일 upload를 가능하게 해줌
+	 ** multipart/form-data는 파일 업로드가 있는 입력 양식 요소에 사용되는 enctype 속성의 값 중 하나이고,
+	    multipart는 폼데이터가 여러 부분으로 나뉘어 서버로 전송되는 것을 의미.
+	    이 폼이 제출될 때, 이 형식을 서버에 알려주며, multipart/form-data로 지정이 되어 있어야 서버에서 정상적으로 데이터를 처리할 수 있다.
+-->
 <br>
 <c:if test="${not empty requestScope.message}">
 => ${requestScope.message}

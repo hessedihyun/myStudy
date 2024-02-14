@@ -50,6 +50,10 @@
 		<th style="background-color:MidnightBlue; color:white; text-align:center;">추천인</th>
 		<td>${requestScope.myInfo.rid}</td>
 	</tr>
+	<tr height="30">
+		<th style="background-color:MidnightBlue; color:white; text-align:center;">이미지</th>
+		<td><img alt="MYIMAGE" src="/spring02/resources/uploadImages/${requestScope.myInfo.uploadfile}" width="70" height="60"></td>
+	</tr>
 </c:if>
 <c:if test="${empty requestScope.myInfo}">
 	<tr>
