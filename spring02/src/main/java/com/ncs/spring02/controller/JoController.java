@@ -1,4 +1,6 @@
 package com.ncs.spring02.controller;
+import java.util.Iterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,14 +102,21 @@ public class JoController {
 	} // jmInsert로 이동하기
 	
 	// Post 방식 jmInsert
-	// String uri => 
-	
-	
-//	 public String jmInsert2(Model model, String currjno, MemberDTO dto, RedirectAttributes rttr) {
-//		 String uri = "jo/joDetail";
-//		 if(service.memberInsert()>0)
-//	 }
-	 
+//	@PostMapping("/jmInsert")
+//	public String memberInsert(Model model, String currjno, String[] grouping, RedirectAttributes rttr) {
+//		String uri="jo/joDetail";
+//		
+//		for(int i=0; i<=grouping.length;i++) {
+//			service.memberInsert(Integer.parseInt(currjno));
+//		}
+//		
+//		if (service.memberInsert(Integer.parseInt(currjno))>0) {
+//			rttr.addFlashAttribute("message", "멤버 등록을 성공하였습니다. 확인해보세요.");
+//		} else {
+//			rttr.addFlashAttribute("message", "멤버 등록을 실패하였습니다. 다시 시도해주세요.");
+//		}
+//		return uri;
+//	}
 	
 //	@RequestMapping(value="/jmList", method=RequestMethod.GET)
 //	public String jmList(Model model, String jno) {

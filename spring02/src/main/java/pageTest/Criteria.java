@@ -30,7 +30,7 @@ public class Criteria {
 	private int rowsPerPage; // 1Page에 출력할 Row의 갯수
 	private int currPage; // 현재 출력(요청) Page
 	private int sno; // start Row 순서번호 : 계산필요
-	private int eno; // end Row 순서번호 : 계산필요 (Oracle만 필요로 한다. MySQL은 limit이 있기 때문에 시작하는 번호만 있으면 된다.)
+ // private int eno; // end Row 순서번호 : 계산필요 (Oracle만 필요로 한다. MySQL은 limit이 있기 때문에 시작하는 번호만 있으면 된다.)
 	
 	// 1) 기본생성자 : 기본값 초기화
 	public Criteria() {
@@ -47,7 +47,7 @@ public class Criteria {
 	}
    // 2.2) rowsPerPage 
    // => 1페이지당 보여줄 Row(Record,튜플) 갯수 확인
-   // => 제한조건 점검 ( 50개 까지만 허용)
+   // => 제한조건 점검 (50개 까지만 허용)
    // => 당장은 사용하지 않지만 사용가능하도록 작성   
 	public void setRowsPerPage(int rowsPerPage) {
 		if(rowsPerPage>5 && rowsPerPage<51)

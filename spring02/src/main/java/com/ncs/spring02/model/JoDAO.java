@@ -20,6 +20,11 @@ public class JoDAO {
 	private static String sql;
 	
 	// ** memberInsert
+	// update jo set jno="${currjno}" where id=#{id}
+//	public int memberInsert() {
+//		
+//		sql = "update jo set jno=\"${currjno}\" where id=#{id}"
+//	}
 	
 	// ** Jo selectList
 	public List<JoDTO> selectList() {

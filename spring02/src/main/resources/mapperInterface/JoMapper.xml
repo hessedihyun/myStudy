@@ -6,7 +6,8 @@
 <!-- ** Jo -->
 <!-- ** selectList -->
 	<select id="selectList" resultType="com.ncs.spring02.domain.JoDTO">
-		select j.jno, j.jname, j.captain, m.name as cname, j.project, j.slogan from member m join jo j on m.id = j.captain
+		select j.jno, j.jname, j.captain, m.name as cname, j.project, j.slogan 
+		from member m join jo j on m.id = j.captain
 	</select>
 <!-- ** selectOne -->
 	<select id="selectOne" resultType="com.ncs.spring02.domain.JoDTO">

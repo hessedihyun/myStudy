@@ -1,12 +1,14 @@
 package com.ncs.spring02.service;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.ncs.spring02.domain.BoardDTO;
-import com.ncs.spring02.model.BoardDAO;
 
 import mapperInterface.BoardMapper;
 import pageTest.Criteria;
+import pageTest.SearchCriteria;
 
 @Service
 public class BoardSerivceImpl implements BoardService {
@@ -18,15 +20,31 @@ public class BoardSerivceImpl implements BoardService {
 	@Autowired
 	BoardMapper mapper;
 	
-	// ** Board_Paging
-	public List<BoardDTO> bPageList(Criteria cri) {
-		return mapper.bPageList(cri);
+	// ** Board Check_List
+	@Override
+	public List<BoardDTO> bCheckList(SearchCriteria cri) {
+		return mapper.bCheckList(cri);
 	}
-	// ** totalCount
-	public int totalRowsCount(Criteria cri) {
-		return mapper.totalRowsCount(cri);
+	@Override
+	public int bCheckRowsCount(SearchCriteria cri) {
+		return mapper.bCheckRowsCount(cri);
 	}
 	
+	// ** Board Search Paging
+	// => ver01 : Criteria 사용
+	// => ver02 : SearchCriteria 사용
+
+	@Override
+	public List<BoardDTO> bPageList(SearchCriteria cri) {
+		// return mapper.bPageList(cri);   //ver01
+		   return mapper.bSearchList(cri); //ver02
+	}
+
+	@Override
+	public int totalRowsCount(SearchCriteria cri) {
+		// return mapper.totalRowsCount(cri);    //ver01
+		   return mapper.bSearchRowsCount(cri);  //ver02
+	}	
 	
 	// ** 답글등록
 	// => rinsert, stepUpdate

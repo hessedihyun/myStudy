@@ -12,7 +12,6 @@
 <body>
 <h2>** 멤버등록 JMInsert **</h2>
 <br>
-${currjno} !!!!
 <form action="jminsert" method="post">
 	<table>
 		<tr>
