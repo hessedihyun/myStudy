@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.ncs.spring02.domain.MemberDTO;
 import com.ncs.spring02.model.MemberDAO;
 import mapperInterface.MemberMapper;
+import pageTest.SearchCriteria;
 
 //** Mybatis 적용 **************************
 //=> CRUD 처리를 Mapper 를 이용
@@ -35,6 +36,40 @@ public class MemberServiceImpl implements MemberService {
 	// => 그러므로 개발자는 interface와 xml만 구현하고 Service랑 연결해주면 됨
 	@Autowired
 	MemberMapper mapper;
+	
+	// ** memberInsert
+	@Override
+	public int memberInsert(String id, int jno) {
+		return mapper.memberInsert(id, jno);
+	}
+	
+	// ** Member Paging & Check_List
+	@Override
+	public List<MemberDTO> aCheckList(SearchCriteria cri) {
+		return mapper.aCheckList(cri);
+	}
+	@Override
+	public int aCheckRowsCount(SearchCriteria cri) {
+		return mapper.aCheckRowsCount(cri);
+	}
+	@Override
+	public List<MemberDTO> mCheckList(SearchCriteria cri) {
+		return mapper.mCheckList(cri);
+	}
+	@Override
+	public int mCheckRowsCount(SearchCriteria cri) {
+		return mapper.mCheckRowsCount(cri);
+	}
+	@Override
+	public List<MemberDTO> mPageList(SearchCriteria cri) {
+		// return mapper.mPageList(cri);
+		return mapper.mSearchList(cri);
+	}
+	@Override
+	public int mTotalRowsCount(SearchCriteria cri) {
+		// return mapper.mTotalRowsCount(cri);
+		return mapper.mSearchRowsCount(cri);
+	}
 	
 	// ** selectList
 	@Override

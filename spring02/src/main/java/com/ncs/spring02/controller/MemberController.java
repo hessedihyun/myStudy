@@ -32,6 +32,9 @@ import com.ncs.spring02.service.MemberService;
 //=>  @Repository : DB 연동을 담당하는 DAO 클래스
 //         DB 연동과정에서 발생하는 예외를 변환 해주는 기능 추가
 
+import pageTest.PageMaker;
+import pageTest.SearchCriteria;
+
 //** Spring 의 redirect ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //** RedirectAttributes
@@ -149,6 +152,67 @@ public class MemberController {
 	// = new BCryptPasswordEncoder;
 	// => root-context.xml에 bean 등록
 	
+	@GetMapping("/mPageList")
+	public void mPageList(HttpServletRequest request, Model model, SearchCriteria cri, PageMaker pageMaker) {
+		// 1) Criteria 처리
+		cri.setSnoEno();
+		
+		// 2) Service	
+		model.addAttribute("list", service.mPageList(cri));
+		
+		// 3) View 처리
+		// mCheckList까지 혼선 처리를 위한
+		String mappingName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+		pageMaker.setCri(cri);
+		pageMaker.setMappingName(mappingName);
+		pageMaker.setTotalRowsCount(service.mTotalRowsCount(cri));
+		model.addAttribute("pageMaker", pageMaker);
+	} // mPageList
+	
+	@GetMapping("/mCheckList")
+	public String mCheckList(HttpServletRequest request, Model model, SearchCriteria cri, PageMaker pageMaker) {
+		String uri="member/mPageList";
+		String mappingName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+		// 1) Criteria 처리
+		cri.setSnoEno();
+		
+		// 2) Service
+		if(cri.getCheck()!=null && cri.getCheck().length <1)
+			cri.setCheck(null);
+		
+		model.addAttribute("list", service.mCheckList(cri));
+		
+		// 3) View 처리
+		pageMaker.setCri(cri);
+		pageMaker.setMappingName(mappingName);
+		pageMaker.setTotalRowsCount(service.mCheckRowsCount(cri));
+		model.addAttribute("pageMaker", pageMaker);
+		
+		return uri;
+	} // mCheckList
+	
+	@GetMapping("/aCheckList")
+	public String aCheckList(HttpServletRequest request, Model model, SearchCriteria cri, PageMaker pageMaker) {
+		String uri="member/mPageList";
+		String mappingName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+		// 1) Criteria 처리
+		cri.setSnoEno();
+		
+		// 2) Service
+		if(cri.getCheck()!=null && cri.getCheck().length <1)
+			cri.setCheck(null);
+		
+		model.addAttribute("list", service.mCheckList(cri));
+		
+		// 3) View 처리
+		pageMaker.setCri(cri);
+		pageMaker.setMappingName(mappingName);
+		pageMaker.setTotalRowsCount(service.mCheckRowsCount(cri));
+		model.addAttribute("pageMaker", pageMaker);
+		
+		return uri;
+	} // mCheckList
+	
 	// ** ID 중복확인
 		@GetMapping("/idDupCheck")
 		public void idDupCheck(@RequestParam("id") String id, Model model) {
@@ -160,9 +224,6 @@ public class MemberController {
 				model.addAttribute("idUse", "T");
 				// => 사용 가능
 			}
-			
-			
-			
 		} // idDupCheck
 	
 	

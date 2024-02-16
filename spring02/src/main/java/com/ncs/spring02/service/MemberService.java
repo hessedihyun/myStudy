@@ -3,9 +3,23 @@ package com.ncs.spring02.service;
 import java.util.List;
 
 import com.ncs.spring02.domain.MemberDTO;
+import pageTest.SearchCriteria;
 
 public interface MemberService {
-
+	
+	// ** memberInsert
+	int memberInsert(String id, int jno);
+	
+	// ** Member Paging & Check_List
+	public List<MemberDTO> mCheckList(SearchCriteria cri);
+	public int mCheckRowsCount(SearchCriteria cri);
+	
+	public List<MemberDTO> aCheckList(SearchCriteria cri);
+	public int aCheckRowsCount(SearchCriteria cri);
+	
+	public List<MemberDTO> mPageList(SearchCriteria cri);
+	public int mTotalRowsCount(SearchCriteria cri);
+		
 	// ** selectList
 	List<MemberDTO> selectList();
 

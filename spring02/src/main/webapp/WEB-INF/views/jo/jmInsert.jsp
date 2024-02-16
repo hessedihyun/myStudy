@@ -12,7 +12,7 @@
 <body>
 <h2>** 멤버등록 JMInsert **</h2>
 <br>
-<form action="jminsert" method="post">
+<form action="jmInsert" method="POST">
 	<table>
 		<tr>
 			<c:forEach var="mf" items="${requestScope.memberInfo}">

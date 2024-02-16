@@ -20,7 +20,11 @@
 // => href, replace('...'), reload() 
 function searchDB() {
 	self.location='bPageList' 
-				+ '${pageMaker.makeQuery(1)}'
+				/* + '${pageMaker.makeQuery(1)}' 
+					=> 하나의 jsp 문서로 다양한 요청을 처리하기위해 쿼리스트링에 url 을 포함했기 때문에
+                   첫 요청에서는  makeQuery 메서드 사용할수 없음
+				*/
+				+ '?currPage=1&rowsPerPage=5'
 				+ '&searchType=' + document.getElementById('searchType').value
 				+ '&keyword=' + document.getElementById('keyword').value;
 				// => searchBtn 클릭한 경우 : 검색조건 입력 후 첫 Page 요청
@@ -48,6 +52,15 @@ function checkClear() {
 	}
 	return false; // reset 의 기본 이벤트를 제거해줘야 한다.
 } // checkClear
+function checkAll() {
+	// document.querySelectorAll('.clear').checked=false;
+	// => nodeList를 반환하기 때문에 적용 안 됨 (배열의 형태)
+	let ck = document.querySelectorAll('.clear');
+	for(let i=0; i<ck.length; i++) {
+		ck[i].checked=true;
+	}
+	return false; // reset 의 기본 이벤트를 제거해줘야 한다.
+} // checkAll
 
 //** querySelector
 // => css 선택자를 이용하여 첫번째 만난 요소 1개만 선택
@@ -83,24 +96,46 @@ function checkClear() {
 	<form action="bCheckList" method="get">
 		<b>ID : </b>
 		<!-- check 의 선택한 값 유지를 위한 코드 -->
-	      <c:set var="ck1" value="false" />
-	      <c:set var="ck2" value="false" />
-	      <c:set var="ck3" value="false" />
-	      <c:set var="ck4" value="false" />
-	      <c:set var="ck5" value="false" />
-	      <c:set var="ck6" value="false" />
-	      <c:set var="ck7" value="false" />
-	      <c:forEach  var="id" items="${pageMaker.cri.check}" >
-	         <c:if test="${id=='admin'}"> <c:set var="ck1" value="true" /> </c:if>
+		<!-- 2) 자동 -->
+  <%--  <c:forEach items="${requestScope.jlist}" var="jlist">
+			<c:set var="ck${jlist.jno}" value="false"/>
+		</c:forEach> --%>
+		
+		<!-- 1) 수동 -->
+        <c:set var="ck1" value="false" />
+        <c:set var="ck2" value="false" />
+        <c:set var="ck3" value="false" />
+        <c:set var="ck4" value="false" />
+        <c:set var="ck5" value="false" />
+        <c:set var="ck6" value="false" />
+        <c:set var="ck7" value="false" />
+	    
+	    <!------------>
+        <c:forEach  var="id" items="${pageMaker.cri.check}" >
+	    <!-- 2) 자동 -->
+	   <%-- <c:forEach items="${requestScope.jlist}" var="jlist">
+	      		<c:if test="${id==jlist.id}">
+	      			<c:set var="ck${jlist.jno}" value="true"/>
+	      		</c:if>
+	      	</c:forEach> --%>
+	        
+        <!-- 1) 수동 -->
+	         <c:if test="${id=='admin2'}"> <c:set var="ck1" value="true" /> </c:if>
 	         <c:if test="${id=='simsim916'}"> <c:set var="ck2" value="true" /> </c:if>
 	         <c:if test="${id=='agr4005'}"> <c:set var="ck3" value="true" /> </c:if>
 	         <c:if test="${id=='bamboo7'}"> <c:set var="ck4" value="true" /> </c:if>
 	         <c:if test="${id=='kso'}"> <c:set var="ck5" value="true" /> </c:if>
 	         <c:if test="${id=='17'}"> <c:set var="ck6" value="true" /> </c:if>
 	         <c:if test="${id=='merci'}"> <c:set var="ck7" value="true" /> </c:if>
-		  </c:forEach>
+		 <!------------>
+		 </c:forEach>
       <!----------------------------------- -->
+		<!-- 2) 자동 -->		
+   <%-- <c:forEach items="${requestScope.jlist}" var="jlist">
+			<input type="checkbox" name="check" class="clear" value="${jlist.captain}" >${jlist.cname}&nbsp;
+		</c:forEach> --%>
 		
+		<!-- 1) 수동 -->
 		<input type="checkbox" name="check" class="clear" value="admin" ${ck1 ? 'checked':''}>관리자&nbsp;
 		<input type="checkbox" name="check" class="clear" value="simsim916" ${ck2 ? 'checked':''}>최문석&nbsp;
 		<input type="checkbox" name="check" class="clear" value="agr4005" ${ck3 ? 'checked':''}>김수빈&nbsp;
@@ -109,6 +144,7 @@ function checkClear() {
 		<input type="checkbox" name="check" class="clear" value="17" ${ck6 ? 'checked':''}>홍길동&nbsp;
 		<input type="checkbox" name="check" class="clear" value="merci" ${ck7 ? 'checked':''}>이지현&nbsp;
 		<input type="submit" value="Search">&nbsp;
+		<input type="button" value="All" onclick="return checkAll()">&nbsp;
 		<input type="reset" value="Clear" onclick="return checkClear()"><hr>
 	</form>
 	
@@ -167,8 +203,8 @@ function checkClear() {
      <c:choose>
      	<c:when test="${pageMaker.prev && pageMaker.spageNo>1}">
 		<!-- ver02: searchQuery 메서드 적용 -->     	
-     		<a href="bPageList${pageMaker.searchQuery(1)}">FP</a>&nbsp;
-     		<a href="bPageList${pageMaker.searchQuery(pageMaker.spageNo-1)}">&LT;</a>&nbsp;&nbsp;
+     		<a href="${pageMaker.searchQuery(1)}">FP</a>&nbsp;
+     		<a href="${pageMaker.searchQuery(pageMaker.spageNo-1)}">&LT;</a>&nbsp;&nbsp;
      	</c:when>
      	<c:otherwise>
      		<font color="Gray">FP&nbsp;&LT;&nbsp;&nbsp;</font>&nbsp;
@@ -182,7 +218,7 @@ function checkClear() {
 			<font color="Orange" size="5"><b>${i}</b></font>&nbsp;
 		</c:if>
 		<c:if test="${i!=pageMaker.cri.currPage}">
-			<a href="bPageList${pageMaker.searchQuery(i)}">${i}</a>&nbsp;
+			<a href="${pageMaker.searchQuery(i)}">${i}</a>&nbsp;
 		</c:if>
 	</c:forEach>
 
@@ -191,8 +227,8 @@ function checkClear() {
       => ver02: searchQuery() 메서드 사용 -->
 	<c:choose>
 		<c:when test="${pageMaker.next && pageMaker.epageNo>0}">
-			&nbsp;<a href="bPageList${pageMaker.searchQuery(pageMaker.epageNo+1)}">&GT;</a>
-			&nbsp;<a href="bPageList${pageMaker.searchQuery(pageMaker.lastPageNo)}">LP</a>
+			&nbsp;<a href="${pageMaker.searchQuery(pageMaker.epageNo+1)}">&GT;</a>
+			&nbsp;<a href="${pageMaker.searchQuery(pageMaker.lastPageNo)}">LP</a>
 		</c:when>
 		<c:otherwise>
 			<font color="Gray">&nbsp;&GT;&nbsp;LP</font>

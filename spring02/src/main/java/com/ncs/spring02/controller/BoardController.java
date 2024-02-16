@@ -1,4 +1,5 @@
 package com.ncs.spring02.controller;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 // import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class BoardController {
 	// public void bPageList(Model model, Criteria cri, PageMaker pageMaker)
 	// => ver02 : SearchCriteria 사용 (검색기능 추가)
 	@GetMapping("/bPageList")
-	public void bPageList(Model model, SearchCriteria cri, PageMaker pageMaker) {
+	public void bPageList(HttpServletRequest request, Model model, SearchCriteria cri, PageMaker pageMaker) {
 		// 1) Criteria 처리
 		// => ver01: currPage, rowsPerPage 값들은 Parameter로 전달되어 자동으로 cri에 set되어 있음
 		// => ver02: ver01 + searchType, keyword도 동일하게 cri에 set
@@ -45,21 +46,31 @@ public class BoardController {
 		// => ver01, 02 모두 같은 service 메서드 사용,
 		// 	  mapper interface에서 사용하는 Sql 구문만 교체
 		//	  즉, BoardMapper.xml에 새로운 sql구문 2개 추가, BoardMapper.java interface 수정
+		model.addAttribute("jlist",jservice.selectList());
 		model.addAttribute("blist", service.bPageList(cri));
 		// model.addAttribute("myInfo", jservice.selectList());
 		
 		// 3) View처리 : PageMaker를 이용하기
 		// => cri, totalRowsCount (Read from DB)
+		String mappingName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+		
 		pageMaker.setCri(cri);
+		pageMaker.setMappingName(mappingName);
 		pageMaker.setTotalRowsCount(service.totalRowsCount(cri));
 		model.addAttribute("pageMaker", pageMaker);
 		
 	} // bPageList.jsp로 이동하기
 	
 	@GetMapping("/bCheckList")
-	public String bCheckList(Model model, SearchCriteria cri, PageMaker pageMaker) {
+	public String bCheckList(HttpServletRequest request, Model model, 
+			SearchCriteria cri, PageMaker pageMaker) {
+		
 		
 		String uri="board/bPageList";
+		String mappingName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+		System.out.println("=> RequestURI: " + request.getRequestURI());
+		// => RequestURI: /spring02/board/bPageList
+		System.out.println("=> mappingName : " + mappingName);
 		
 		// 1) Criteria 처리
 		cri.setSnoEno();
@@ -74,6 +85,7 @@ public class BoardController {
 		
 		// 3) View처리 : PageMaker를 이용하기
 		pageMaker.setCri(cri);
+		pageMaker.setMappingName(mappingName);
 		pageMaker.setTotalRowsCount(service.bCheckRowsCount(cri));
 		model.addAttribute("pageMaker", pageMaker);
 		

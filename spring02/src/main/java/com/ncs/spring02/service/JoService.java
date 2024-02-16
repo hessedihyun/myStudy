@@ -6,7 +6,7 @@ import com.ncs.spring02.domain.JoDTO;
 import com.ncs.spring02.domain.MemberDTO;
 
 public interface JoService {
-
+	
 	// ** jo selectList
 	List<JoDTO> selectList();
 
