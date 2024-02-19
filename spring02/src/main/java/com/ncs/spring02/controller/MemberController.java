@@ -314,6 +314,16 @@ public class MemberController {
 			// => update 요청 확인 후 uri 수정
 			if("U".equals(jCode)) 
 				uri = "member/updateForm";
+			/* 
+			 
+			 if (service.selectDTO(dto) !=null) {
+			 	test = dto.getPoint() * 1000 / 365
+			 	=> dto에 담겨진 값들을 활용 가능
+			 }
+			 
+			 */
+			
+			
 			
 			// 2. Service & 결과 처리
 			model.addAttribute("myInfo", service.selectOne(id));

@@ -1,13 +1,12 @@
 package javaTest;
 
-import static org.junit.Assert.assertArrayEquals;
 // static한 값에 접근하려면 Class이름.어쩌구로 접근해야 하는데, 그런 Class이름을 생략가능(.Assert.)
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 
 // ** Book class
@@ -50,7 +49,7 @@ class Book {
 //4) assertNotNull(a) : a객체가 Null 이 아님을 확인
 //5) assertArrayEquals(a,b) : 배열 a와b가 일치함을 확인
 
-//=> 자동 import 가 안되는경우
+// => 자동 import 가 안되는경우
 // -> 프로젝트 우클릭 -> Build Path -> Configure Build Path.. 
 //       -> Libraries -> Add Library  -> JUnit5
 // -> @Test: import org.junit.Test 확인

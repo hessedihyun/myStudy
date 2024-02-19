@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
                         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapperInterface.MemberMapper">
-
 <!-- ** Member  -->
 <update id="memberInsert">
 	update member 
@@ -14,14 +13,10 @@
 	
 	select * from member
 	<if test="check!=null">
-		where  age >=
 		<foreach collection="check" item="ait">
-			#{ait}
-		</foreach>
-		and age
-		<![CDATA[ <= ]]>
-		<foreach collection="check" item="ait">
-			#{ait}+9
+			<if test="">
+				
+			</if>
 		</foreach>
 	</if>
 	limit #{sno}, #{rowsPerPage}
@@ -31,15 +26,6 @@
 	
 	select count(*) from member
 	<if test="check!=null">
-		where  age >=
-		<foreach collection="check" item="ait">
-			#{ait}
-		</foreach>
-		and age
-		<![CDATA[ <= ]]>
-		<foreach collection="check" item="ait">
-			#{ait}+9
-		</foreach>
 	</if>
 </select>
 

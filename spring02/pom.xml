@@ -35,13 +35,24 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
-		<!-- AspectJ -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
-		</dependency>
-
+		<!-- ** AOP Test 
+         1) AspectJ -->
+      <dependency>
+         <groupId>org.aspectj</groupId>
+         <artifactId>aspectjrt</artifactId>
+         <version>${org.aspectj-version}</version>
+      </dependency>
+      <!-- 2) AspectJ Weaver 
+            : AOP 실습시에 반드시 추가해줄것 
+            : weaver가 AOP에서 advice를 핵심기능에 적용하는 설정 파일 -->
+      <dependency>
+         <groupId>org.aspectj</groupId>
+         <artifactId>aspectjweaver</artifactId>
+         <version>${org.aspectj-version}</version>
+      </dependency>
+         
+         
+		
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -189,6 +200,28 @@
          <artifactId>mybatis-spring</artifactId>
          <version>1.2.4</version>
       </dependency>
+      
+      
+      
+      
+      <!-- 자율 학습 -->
+      <!-- 이메일 인증을 위한 API -->
+      <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>5.3.9</version>
+		</dependency>
+	
+	
+	
 	</dependencies>
 	<build>
 		<plugins>

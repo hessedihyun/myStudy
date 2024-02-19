@@ -1,16 +1,18 @@
 package com.ncs.spring02.model;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import com.ncs.spring02.domain.MemberDTO;
 
 @Component
+@Repository
 public class MemberDAO {
 	private static Connection cn = DBConnection.getConnection();
 	private static Statement st;
@@ -50,6 +52,34 @@ public class MemberDAO {
 				return null;
 			}
 		} //selectList
+	// ** JUnit Test : selectOne(MemberDTO dto 매개변수)
+	public MemberDTO selectDTO(MemberDTO dto) {
+		sql="select * from member where id=? ";
+		try {
+			pst = cn.prepareStatement(sql);
+			pst.setString(1, dto.getId());
+			rs=pst.executeQuery();
+			if(rs.next()) {
+				dto.setId(rs.getString(1));
+				dto.setPassword(rs.getString(2));
+				dto.setName(rs.getString(3));
+				dto.setAge(rs.getInt(4));
+				dto.setJno(rs.getInt(5));
+				dto.setInfo(rs.getString(6));
+				dto.setPoint(rs.getDouble(7));
+				dto.setBirthday(rs.getString(8));
+				dto.setRid(rs.getString(9));
+				dto.setUploadfile(rs.getString(10));
+	        	
+				return dto;
+			} else {
+				return null;
+		}} catch (Exception e) {
+			return null;
+		}
+	} // selectDTO
+		
+		
 	// ** selectOne : 기본 자료형 매개변수 Call By Value
 	public MemberDTO selectOne(String id) {
 		sql = "select * from member where id = ?";
