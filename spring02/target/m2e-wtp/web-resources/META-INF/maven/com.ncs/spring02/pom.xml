@@ -94,7 +94,7 @@
 					<artifactId>jmxri</artifactId>
 				</exclusion>
 			</exclusions>
-			<scope>runtime</scope>
+			<scope>runtime</scope> <!-- runtime 시에만 가능하게끔 => 따로 아래 log4j를 설정 -->
 		</dependency>
 
 		<!-- @Inject -->

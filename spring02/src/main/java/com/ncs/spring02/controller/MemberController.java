@@ -32,6 +32,8 @@ import com.ncs.spring02.service.MemberService;
 //=>  @Repository : DB 연동을 담당하는 DAO 클래스
 //         DB 연동과정에서 발생하는 예외를 변환 해주는 기능 추가
 
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import pageTest.PageMaker;
 import pageTest.SearchCriteria;
 
@@ -129,25 +131,42 @@ import pageTest.SearchCriteria;
 //=> @Log4j Test
 // -> dependency 필요함 (pom.xml 확인)
 // -> 로깅레벨 단계 준수함 ( log4j.xml 의 아래 logger Tag 의 level 확인)
-//    TRACE > DEBUG > INFO > WARN > ERROR > FATAL(치명적인)
-//    <logger name="com.ncs.green">
+//    TRACE -> DEBUG -> INFO -> WARN -> ERROR -> FATAL(치명적인)
+//    <logger name="com.ncs.spring02">
 //       <level value="info" />
 //    </logger>   
 
-// -> Logger 사용과의 차이점 : "{}" 지원안됨 , 호출명 log
+// -> Logger 사용과의 차이점 : "{}" 지원안됨 , 호출명 log // 문자열 더하기를 하면 됨!!
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+@Log4j
+@AllArgsConstructor // (@Log4j를 쓴김에 롬복썼으니) 개별적인 @Autowired가 생략 가능하다. -> 초기화하면서 생성한다.
 @Controller
 @RequestMapping(value= "/member")
 public class MemberController {
 	
-	@Autowired(required=false)
+	// @Autowired(required=false)
 	MemberService service;
 	
-	@Autowired(required=false)
+	// @Autowired(required=false)
 	JoService jservice;
 	
-	@Autowired(required = false)
+	//** Lombok @Log4j Test
+	@GetMapping("/log4jTest")
+	public String log4jTest() {
+		// 'for'를 재미있게 4로 표현했음: log for java 라는 뜻
+		String name="merci";
+		
+		log.error("** Lombok @Log4j Test 中 Error : name="+name);
+		log.warn("** Lombok @Log4j Test 中 Warn : name="+name);
+		log.info("** Lombok @Log4j Test 中 Info : name="+name);
+		log.debug("** Lombok @Log4j Test 中 Debug : name="+name);
+		log.trace("** Lombok @Log4j Test 中 Trace : name="+name);
+		
+		return "redirect:/";
+	}
+	
+	// @Autowired(required = false)
 	PasswordEncoder passwordEncoder;
 	// = new BCryptPasswordEncoder;
 	// => root-context.xml에 bean 등록
