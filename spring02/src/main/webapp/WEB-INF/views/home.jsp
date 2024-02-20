@@ -49,7 +49,9 @@
 &nbsp;<a href="board/boardList">BList</a>&nbsp;
 &nbsp;<a href="bcrypt">BCrypt</a><br>
 &nbsp;<a href="board/bPageList">BPaging</a>&nbsp;
+&nbsp;<a href="etest">Exception</a>&nbsp;
 </div>
+
 
 </body>
 </html>

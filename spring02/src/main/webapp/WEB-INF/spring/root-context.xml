@@ -33,9 +33,9 @@
 	<!-- ************************************** -->
 	
 	<!-- JUnit Test
-	=> SpringDAO Test Bean 설정 : MemberDAO, MemberDTO -->
+	=> SpringDAO Test Bean 설정 : MemberDAO, MemberDTO 
 	<bean class="com.ncs.spring02.model.MemberDAO" lazy-init="true"/>
-	<bean class="com.ncs.spring02.domain.MemberDTO" lazy-init="true"/>
+	<bean class="com.ncs.spring02.domain.MemberDTO" lazy-init="true"/> -->
 	
 	<!-- 이메일 인증 관련 등록 -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
