@@ -1,0 +1,39 @@
+package servlet01;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+ @WebServlet("/getpost")
+public class Ex03_GetPost extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    public Ex03_GetPost() {
+        super();
+    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	// 1) request의 Parameter 처리
+	// => 한글 처리, getParameter 전에 해야 함
+	String id = request.getParameter("id"); // 파라미터의 name 값을 불러와 변수 id에 넣어줌 
+	// 2) name이 id인 input Tag의 value 값을 return
+	String name = request.getParameter("name");
+		
+	PrintWriter out = response.getWriter();
+	out.print("<html><body>");
+	out.print("<h2 style='color:blue;'> ** Hello Servlet **</h2>");
+	out.print("<h3> => 전달된 parameter 확인</h3>");
+	out.print("<h3> => id: "+id+"</h3>");
+	out.print("<h3> => Name: "+name+"</h3>");
+	out.print("<h3> => 여기는 doGet 메서드입니다.</h3>");
+	out.print("</body></html>");
+	
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request,response);
+	}
+
+} // class 

@@ -1,0 +1,21 @@
+package j01_basic;
+
+class Store {
+	private Object data;
+	public Object getData() { return data; }
+	public void setData(Object data) {this.data = data;}
+} // Store
+public class Gn01_StoreTest {
+	public static void main(String[] args) {
+		// 1. Object를 이용한 기존 방식
+		Store s1 = new Store();
+		s1.setData("짜장면");
+		s1.setData(123); // int <- auto 언박싱(형변환) -> Integer 래퍼 클래스
+		s1.setData(123.456); // double <- auto 언박싱(형변환)-> Double 래퍼 클래스
+		s1.setData(123.456f);
+		s1.setData(123456789L);
+		
+
+	} // main
+
+} // class

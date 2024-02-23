@@ -1,0 +1,28 @@
+package servlet01;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/list")
+public class EX02_MVC01List extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	public EX02_MVC01List() {
+        super();
+    }
+    // ** MVC 패턴1 StudnetList 출력
+    // => 요청 Service 처리 (JDBC를 통해서 DB 작업을 해야 함) // 현재 얘가 Controller임
+	// => 요청 결과 출력 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		response.setContextType("text/html; charset=UTF-8");
+		
+		PrintWriter out = response.getWriter();
+	} //doGet
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

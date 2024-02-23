@@ -1,0 +1,49 @@
+package servlet01;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import mvcTest.StudentDTO;
+import mvcTest.StudentService;
+
+@WebServlet("/list")
+public class EX02_MVC01List extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	public EX02_MVC01List() {
+        super();
+    }
+    // ** MVC 패턴1 StudnetList 출력
+    // => 요청 Service 처리 (JDBC를 통해서 DB 작업을 해야 함) // 현재 얘가 Controller임
+	// => 요청 결과 출력
+	StudentService service = new StudentService();
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<StudentDTO> list = new ArrayList<StudentDTO>();
+		list = service.selectList();
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		for(int i=0;i<19;i++) {
+		out.print(list.get(i).getSno());
+		out.print(list.get(i).getName());
+		out.print(list.get(i).getAge());
+		out.print(list.get(i).getJno());
+		out.print(list.get(i).getInfo());
+		out.print(list.get(i).getPoint());
+		out.print("\n")
+		}
+		
+	} //doGet
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

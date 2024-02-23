@@ -1,0 +1,215 @@
+package jdbc02;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import jdbc01.DBConnection;
+
+public class StudentDAO {
+	private static Connection cn = DBConnection.getConnection();
+	private static Statement st;
+	private static PreparedStatement pst;
+	private static ResultSet rs;
+	private static String sql;
+	
+	// ** Join Test
+	// => sno, name, age, jno, jname, project, captain, 조장이름
+	// => JoDTO 작성, joinList() 메서드 작성 (Controller, Service, DAO)	
+	// ** joinList
+	public List<StudentDTO> joinList() {
+		sql="select s1.sno, s1.name, s1.age, s1.jno, jname, project, captain," 
+				+"(select name from student where sno=captain) cname"
+				+" from student s1 Left Outer Join  jo j ON s1.jno=j.jno";
+		List<StudentDTO> list = new ArrayList<StudentDTO>();
+		
+		try {
+			pst=cn.prepareStatement(sql);
+			rs=pst.executeQuery();	
+			if (rs.next()) {
+				do {
+					StudentDTO dto = new StudentDTO();
+					dto.setSno(rs.getInt(1));
+					dto.setName(rs.getString(2));
+					dto.setAge(rs.getInt(3));
+					dto.setJno(rs.getInt(4));
+					dto.setJname(rs.getString(5));
+					dto.setProject(rs.getString(6));
+					dto.setCaptain(rs.getInt(7));
+					dto.setCname(rs.getString(8));
+					list.add(dto);
+				}while(rs.next());
+				return list;
+			}else {
+				return null;
+			}
+		} catch (Exception e) {
+			System.out.println("** joinList Exception => "+e.toString());
+			return null;
+		}
+	} //joinList	
+	
+	// ** selectList
+		public List<StudentDTO> selectList() {
+			sql="select * from student";
+			List<StudentDTO> list = new ArrayList<StudentDTO>();
+			
+			try {
+				pst=cn.prepareStatement(sql);
+				rs=pst.executeQuery();	
+				// => 결과의 존재여부
+				// => 존재: list 에 담기
+				// => 없음: return null
+				if (rs.next()) {
+					do {
+						// => setter 사용
+						//StudentDTO dto = new StudentDTO();
+						//dto.setSno(rs.getInt(1));
+						//dto.setName(rs.getString(2));
+						//dto.setAge(rs.getInt(3));
+						//dto.setJno(rs.getInt(4));
+						//dto.setInfo(rs.getString(5));
+						//dto.setPoint(rs.getDouble(6));
+						
+						// => 생성자 활용 (cname 추가후 수정)
+						StudentDTO dto = new StudentDTO(rs.getInt(1), rs.getString(2),
+								rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getDouble(6), null);
+						
+						list.add(dto);
+					}while(rs.next());
+					return list;
+				}else {
+					return null;
+				}
+			} catch (Exception e) {
+				System.out.println("** selectList Exception => "+e.toString());
+				return null;
+			}
+		} //selectList
+	// ** selectOne
+	public StudentDTO selectOne(int sno) {
+		sql = "select * from student where sno = ?";
+		
+		try {
+			pst = cn.prepareStatement(sql);
+			pst.setInt(1, sno);
+			rs=pst.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					StudentDTO dto = new StudentDTO(rs.getInt(1),rs.getString(2),
+							rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getDouble(6));					
+					return dto;
+				} while(rs.next());
+			} else {
+				return null;
+			}
+			} catch (Exception e){
+			System.out.println("** selectOne Exception => **" + e.toString());
+			return null;
+		}
+	} // selectOne
+	// ** selectOne2
+	public void selectOne2(StudentDTO dto) {
+		sql = "select * from student where sno = ?";
+		
+		try {
+			pst = cn.prepareStatement(sql);
+			pst.setInt(1, dto.getSno());
+			rs=pst.executeQuery();
+			
+			if(rs.next()) {
+					dto.setName(rs.getString(2));
+					dto.setAge(rs.getInt(3));
+					dto.setJno(rs.getInt(4));
+					dto.setInfo(rs.getString(5));
+					dto.setPoint(rs.getDouble(6));
+			} else {
+				System.out.println("** Student 없음");
+			}
+		} catch (Exception e){
+		System.out.println("** selectOne Exception => **" + e.toString());
+	}
+	} // selectOne2
+	// ** Insert
+	public int insert(StudentDTO dto) {
+		sql = "insert into student(name,age,jno,info) values(?,?,?,?)";
+		
+		try {
+			pst = cn.prepareStatement(sql);
+			pst.setString(1, dto.getName());
+			pst.setInt(2, dto.getAge());
+			pst.setInt(3, dto.getJno());
+			pst.setString(4, dto.getInfo());
+			
+			return pst.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(" ** insert Exception =>" + e.toString());
+			return 0;
+		}
+	}
+	// ** update
+	public int update(StudentDTO dto) {
+		sql = "update student set info=?, point = ? where sno=?";
+		try {
+			pst=cn.prepareStatement(sql);
+			pst.setString(1, dto.getInfo());
+			pst.setDouble(2, dto.getPoint());
+			pst.setInt(3, dto.getSno());
+			
+			return pst.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("** update Exception => "+e.toString());
+			return 0;
+		}
+	}
+	// ** delete
+	public int delete(int sno) {
+		sql = "delete from student where sno=?";
+		try {
+			pst=cn.prepareStatement(sql);
+			pst.setInt(1, sno);
+			
+			return pst.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("** delete Exception => "+e.toString());
+			return 0;
+		}
+	}
+	
+	// ** JoinList
+	public List<JoDTO> joinList() {
+		sql = "select * from student inner join select * from jo";
+		
+		List<StudentDTO> list = new ArrayList<StudentDTO>();
+		try {
+			pst=cn.prepareStatement(sql);
+			rs=pst.executeQuery();
+			
+			if(rs.next()) {
+				do {
+//					StudentDTO dto = new StudentDTO();
+//					dto.setSno(rs.getInt(1));
+//					dto.setName(rs.getString(2));
+//					dto.setAge(rs.getInt(3));
+//					dto.setJno(rs.getInt(4));
+//					dto.setInfo(rs.getString(5));
+//					dto.setPoint(rs.getDouble(6));
+					
+					StudentDTO dto = new StudentDTO(rs.getInt(1),rs.getString(2),
+					rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getDouble(6));
+					list.add(dto);
+				}while(rs.next());
+				return list;
+			} else {
+				return null;
+				}
+		} catch (Exception e) {
+			System.out.println("** selectList 결과가 1건도 없음 **");			
+			return null;
+		}
+	}
+} // class

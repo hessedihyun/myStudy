@@ -1,0 +1,28 @@
+package servlet02_form;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/reqinfo")
+public class Ex05_Requestioninfo extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    public Ex05_Requestioninfo() {
+        super();
+    }
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	// ** 화면 출력
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print("<h2>** Request Information **</h2>");
+		out.print("<h3>=>주요 메서드</h3>");
+	} // doPost
+
+
+} // class

@@ -1,0 +1,31 @@
+package j01_basic;
+import jdbc02.JoDTO;
+// ** 제너릭의 유용성 **
+// (제너릭 사용) : 어떤 타입으로 지정해놓고 쓰고 싶을 때
+// (제너릭 전) 
+class Store {
+	private Object data;
+	public Object getData() { return data; }
+	public void setData(Object data) {this.data = data;}
+} // Store
+public class Gn01_StoreTest {
+	public static void main(String[] args) {
+		// 1. Object를 이용한 기존 방식
+		Store s1 = new Store();
+		s1.setData("짜장면");
+		s1.setData(123); // int <- auto 언박싱(형변환) -> Integer 래퍼 클래스
+		s1.setData(123.456); // double <- auto 언박싱(형변환)-> Double 래퍼 클래스
+		s1.setData(123.456f);
+		s1.setData(123456789L);
+     // s1.setData(new JoDTO());
+		s1.setData(new JoDTO(7,"Banana", 77,"화이팅","Generic Test"));
+		System.out.println("** Test 1 => " + s1.getData());
+		
+		// => 단점 Test
+		String s = (String)s1.getData();
+		System.out.println("** 단점 Test => " + s);
+		
+		
+	} // main
+
+} // class

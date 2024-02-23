@@ -1,0 +1,31 @@
+package servlet03_flow;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("01set")
+public class EX02_01setAttribute extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public EX02_01setAttribute() {
+        super();
+    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 1. request 처리
+		// => form 없이 쿼리스트링으로 Test
+		//    ~~/01set?id=banana&name=홍길동&age=22
+		// => 한글처리(Post 요청 시 필수)
+		
+		request.setCharacterEncoding("UTF-8");
+		String id = request.getParameter("id");
+		String name = request.getParameter("name");
+		int age =Integer.parseInt(request.getParameter("age"));
+		System.out.println("** setAttribute Test ヾ(•ω•`)oヾ(•ω•`)o **");
+		System.out.printf("** Parameter id=%s, name=%s, age=%d",id, name, age);
+	}// doGet
+} // class

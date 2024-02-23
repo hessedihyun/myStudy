@@ -1,0 +1,10 @@
+package jdbc02;
+
+//Controller하고 DAO 사이에 서비스가 필요하다.
+public class StudentController {
+
+	
+	public static void main(String[] args) {
+		
+	} // main
+} // class

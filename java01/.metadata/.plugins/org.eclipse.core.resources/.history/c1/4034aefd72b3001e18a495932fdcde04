@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="mvcTest.StudentDTO, java.util.List"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>** MVC02_List_Java **</title>
+</head>
+<body>
+<%
+	List<StudentDTO> list =(List<StudentDTO>)request.getAttribute("myList");
+	
+%>
+</body>
+</html>

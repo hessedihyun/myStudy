@@ -1,0 +1,34 @@
+package servlet03_flow;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+
+@WebServlet("/sessioni")
+public class EX03_SessionInfo extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    
+	public EX03_SessionInfo() {
+        super();
+    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 1. Session 인스턴스 생성
+		// => Session 객체는 클라이언트가 접속과 동시에 서버에서 자동 생성됨
+		//    이 값을 코드내에서 사용하기위해 전달받음
+		HttpSession session = request.getSession();
+		
+		// 2. Session Info 출력
+		Date now = new Date(); // 원하는 포맷으로 출력하기 위해서 포맷터를 하나 지정해야 한다. 포맷터 짝꿍이 정해져 있음 SimpleDateFormat이다.
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	}
+
+
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>** index **</title>
+</head>
+<body>
+<h2>** Dynamic Web Project **</h2>
+<h2> 안녕하세요요요요요요 안녕히가세요요요요요</h2>
+
+<form action="hello" method="get">
+	<input type="text" name="id"/>
+	<input type="submit" value="Test"/>	
+</form>
+<hr>
+<!--  ** 경로 표기
+	=> 절대경로 : /(슬러시)로 시작, 프로젝트명부터 전체경로 표기
+	   ex) /web01/images/letsgo.png
+	   -> (webapp 폴더는 생략)
+	=> 상대경로 : 현재위치에서 시작. /로 시작하면 안됨
+	   -> ./(점 슬러시)로 시작, ../(점점 슬러시)는 1단계 상위. 
+	   ex) "./images/letsgo.png", "images/letsgo.png" 동일
+-->
+<!-- <img alt="" src="/web01/images/party_parrot.gif" width="300" height="200">   -->
+<img alt="" src="images/party_parrot.gif" width="300" height="200">
+<hr>
+&nbsp;<a href="/web01/hello">Hello</a>&nbsp;
+&nbsp;<a href="/web01/list">MVC01List</a>&nbsp;
+</body>
+</html>

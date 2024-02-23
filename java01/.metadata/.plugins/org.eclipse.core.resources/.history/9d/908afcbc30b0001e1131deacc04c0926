@@ -1,0 +1,43 @@
+package servlet01;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import mvcTest.StudentDTO;
+import mvcTest.StudentService;
+
+@WebServlet("/list")
+public class EX02_MVC01List extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	public EX02_MVC01List() {
+        super();
+    }
+    // ** MVC 패턴1 StudnetList 출력
+    // => 요청 Service 처리 (JDBC를 통해서 DB 작업을 해야 함) // 현재 얘가 Controller임
+	// => 요청 결과 출력
+	StudentService service = new StudentService();
+	public void printList(List<mvcTest.StudentDTO> list) {
+		System.out.println("Student List입니다.");
+		if(list != null) {
+			for(StudentDTO s : list) {
+				System.out.println(s);
+			}
+		} else {
+			System.out.println("** selectList 결과가 1건도 없음 **");	
+		}
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	 
+		
+	} //doGet
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

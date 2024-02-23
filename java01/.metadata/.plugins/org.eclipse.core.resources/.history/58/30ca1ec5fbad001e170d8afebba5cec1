@@ -1,0 +1,80 @@
+package jdbc02;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.List;
+
+import jdbc01.DBConnection;
+
+// Controller하고 DAO 사이에 서비스가 필요하다.
+
+//** DAO(Data Access Object)
+//=> SQL 구문 처리
+//=> CRUD 구현 
+// Create(Insert), Read(selectList, selectOne), Update, Delete
+
+// ** 첫번째 예제 DBStart와 ~~~DAO의 차이점은 무엇일까?
+// => 결과를 직접 출력(처리)하지 않고, 요청자에게 제공해야 한다.
+// => 즉, 메서드 역할별로 처리결과를 return 해줘야 한다는 것이다. 
+// => 그러므로 특히 select의 결과를 잘 전달하기 위해서는 결과를 객체화해야 함.
+
+public class StudentDAO {
+	// ** 전역 변수 정의
+	private static Connection cn = DBConnection.getConnection();
+	private static Statement st;
+	private static PreparedStatement pst;
+	private static ResultSet rs;
+	private static String sql;
+	
+	// ** selectList // StudentDTO는 1 김수미 30 1 계란한판 이 것이 클래스 하나 인것과 같은 셈
+	public List<StudentDTO> selectList() {
+		// 컬렉션 : list (순차 처리, 중복이 허용됨), Map(key와 value / key로 이용해 찾기 / key가 다를 때 value 중복을 허용한다.), Set(순서가 없고, 중복이 안됨)
+		// list 중에는 Arraylist와 Linkedlist가 있다. 배열하고 ArrayList의 차이는 배열은 크기가 [5] 정해짐(5이상 못쓴다) Arraylist는 가변적이다. 
+		sql = "select * from student";
+		
+		List<StudentDTO> list = new ArrayList<studentDTO>(); // list 조상 인터페이스다. list는 new 생성 안된다. (new list()X) 
+		// 왼편은 조상, 우측편은 후손
+		try {
+			pst=cn.prepareStatement(sql);
+			rs=pst.executeQuery();
+			// => 결과의 존재 여부
+			// => 존재: list에 담기
+			// => 없음: return null;
+			
+			if(rs.next()) {
+				do {
+//					StudentDTO dto = new StudentDTO();
+//					dto.setSno(rs.getInt(1));
+//					dto.setName(rs.getString(2));
+//					dto.setAge(rs.getInt(3));
+//					dto.setJno(rs.getInt(4));
+//					dto.setInfo(rs.getString(5));
+//					dto.setPoint(rs.getDouble(6));
+					
+					
+					StudentDTO dto = new StudentDTO(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getString(5),rs.getDouble(6));
+					
+					
+					
+					list.add(dto);
+					
+				}while(rs.next());
+			} else return null;
+		} catch (Exception e) {
+			System.out.println("** selectList Exception => " + e.toString());			
+			return null;
+		}
+	
+	}   // Arraylist가 빠르다.
+	// ** selectOne
+	
+	// ** Insert
+	
+	// ** update
+	
+	// ** delete
+	
+	
+} // class

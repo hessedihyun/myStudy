@@ -1,0 +1,17 @@
+
+1월 11, 2024 17:25:22.523 NEW SESSION
+1월 11, 2024 17:25:22.523 [1440:3300:0111/172522.511:ERROR:mcs_client.cc(750)] Received close command, resetting connection.
+
+1월 12, 2024 10:59:26.396 NEW SESSION
+1월 12, 2024 10:59:26.396 [2884:5444:0112/105926.393:ERROR:sharing_service.cc(250)] Device un-registration failed with fatal error
+1월 12, 2024 11:58:24.478 [2884:5444:0112/115824.478:ERROR:interface_endpoint_client.cc(702)] Message 1 rejected by interface blink.mojom.WidgetHost
+1월 12, 2024 12:20:14.95 [2884:2332:0112/122014.095:ERROR:leveldb_factory.cc(88)] Failed to open LevelDB database from C:\Users\Administrator\AppData\Local\Google\Chrome\User Data\Profile 1\IndexedDB\https_www.notion.so_0.indexeddb.leveldb,IO error: C:\Users\Administrator\AppData\Local\Google\Chrome\User Data\Profile 1\IndexedDB\https_www.notion.so_0.indexeddb.leveldb/LOCK: File currently in use. (ChromeMethodBFE: 15::LockFile::2)
+1월 12, 2024 12:20:16.117 [2884:2332:0112/122016.117:ERROR:leveldb_factory.cc(88)] Failed to open LevelDB database from C:\Users\Administrator\AppData\Local\Google\Chrome\User Data\Profile 1\IndexedDB\https_www.notion.so_0.indexeddb.leveldb,IO error: C:\Users\Administrator\AppData\Local\Google\Chrome\User Data\Profile 1\IndexedDB\https_www.notion.so_0.indexeddb.leveldb/LOCK: File currently in use. (ChromeMethodBFE: 15::LockFile::2)
+1월 12, 2024 13:13:23.371 [2884:5444:0112/131323.371:ERROR:CONSOLE(0)] "ReferenceError: dragEvent is not defined", source:  (0)
+1월 12, 2024 13:14:06.974 [2884:5444:0112/131406.973:ERROR:CONSOLE(0)] "ReferenceError: dragEvent is not defined", source:  (0)
+1월 12, 2024 14:22:38.326 [2884:5444:0112/142238.325:ERROR:device_event_log_impl.cc(192)] [14:22:38.326] USB: usb_service_win.cc:104 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: ��Ұ� �����ϴ�. (0x490)
+1월 12, 2024 14:22:38.642 [2884:5444:0112/142238.641:ERROR:CONSOLE(1)] "Request Network.loadNetworkResource failed. {"code":-32602,"message":"Unsupported URL scheme"}", source: devtools://devtools/bundled/devtools-frontend/front_end/core/protocol_client/protocol_client.js (1)
+1월 12, 2024 14:22:51.823 [2884:5444:0112/142251.822:ERROR:CONSOLE(1)] "Request Network.loadNetworkResource failed. {"code":-32602,"message":"Unsupported URL scheme"}", source: devtools://devtools/bundled/devtools-frontend/front_end/core/protocol_client/protocol_client.js (1)
+1월 12, 2024 15:55:59.471 [2884:5444:0112/155559.471:ERROR:device_event_log_impl.cc(192)] [15:55:59.472] Bluetooth: bluetooth_adapter_winrt.cc:1058 Getting Default Adapter failed.
+1월 12, 2024 15:57:12.238 [2884:5444:0112/155712.238:ERROR:CONSOLE(0)] "ReferenceError: dragEvent is not defined", source:  (0)
+1월 12, 2024 18:11:12.930 INFO: Created TensorFlow Lite XNNPACK delegate for CPU.

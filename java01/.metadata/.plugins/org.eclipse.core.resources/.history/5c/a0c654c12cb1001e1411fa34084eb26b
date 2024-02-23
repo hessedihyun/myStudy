@@ -1,0 +1,57 @@
+package servlet03_flow;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import mvcTest.StudentDTO;
+import mvcTest.StudentService;
+
+@WebServlet("/login")
+public class EX04_Login extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	public EX04_Login() {
+        super();
+    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 1. 요청분석
+		// => 한글, request 의 Parameter 처리
+		request.setCharacterEncoding("UTF-8");
+		String sno = request.getParameter("sno");
+		String name = request.getParameter("name");
+		String uri="index.html";
+		
+		// 2. Service 처리
+		// => Service의 selectOne()을 이용 : sno 확인
+		// 	  확인 결과 성공이면, name을 (그 다음) 확인
+		// => 성공 : index.html 로 , 실패 : flowEx04_LoginForm.jsp 로 이동
+		// 3. View 출력 (Response) : Forward
+		// => 성공 : index.html
+		// => 실패 : flowEx04_LoginForm.jsp (재로그인 유도)
+		StudentService service = new StudentService();
+		StudentDTO dto = new StudentDTO();
+		
+		dto = service.selectOne(Integer.parseInt(name));
+		response.setContentType("text/html; charset=UTF-8");
+		
+		if(dto.getSno() == Integer.parseInt(sno) && dto.getName().equals(name)) {
+			response.sendRedirect(uri);
+		} else {
+			uri = "/web1/servletTestForm/flowEx04_LoginForm.jsp";
+			response.sendRedirect(uri);
+		}
+	} // doGet
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	} // doPost
+
+}

@@ -1,0 +1,173 @@
+package jdbc01;
+
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+// ** 순서
+// 1) JBDC API 에 정의된 필요한 객체들을 전역 변수 정의
+// 2) CRUD 기능 메서드
+// 3) main 메서드 사용
+// 4) 
+public class DBStart {
+	
+	private static Connection cn = DBConnection.getConnection();
+	private static Statement st;
+	private static PreparedStatement pst;
+	private static ResultSet rs;
+	private static String sql;
+	
+	
+	// ** StudentList
+	// => Mysql Command
+	// -> Login -> DB선택 -> sql 구문 실행 -> 결과
+	// => JDBC
+	// -> Connection 객체 생성 -> sql 구문 : Statement 또는 PreparedStatement를 가지고 실행
+	// -> 결과 : ResultSet에 전달됨
+	
+	public static void selectList() {
+		
+		sql = "select * from student";
+		try {
+			st=cn.createStatement();
+			rs=st.executeQuery(sql);
+		     // ** 결과출력
+	         // => 결과 존재 확인
+	         // => ResultSet 객체는 이를 위한 메서드 제공 
+	         // => next() : 다음에 Data가 존재하면 true, 현재Data를 제공
+						
+			System.out.println("** Student List **");
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("sno|name|age|jno|info|point");
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			
+			if(rs.next()) {
+				// => selectList 결과가 존재함 // for - 증감이 정확하게 있을때, count가 정확히 있을 때 VS while - VS do while
+				do {
+					System.out.print(rs.getInt(1)+" ");
+					System.out.print(rs.getString("name")+" ");
+					System.out.print(rs.getInt(3)+" ");
+					System.out.print(rs.getInt(4)+" ");
+					System.out.print(rs.getString(5)+" ");
+					System.out.print(rs.getDouble(6)+"\n");
+					
+				} while(rs.next());
+				
+			} else {
+				// => selectList 결과가 1건도 없음을 의미한다.
+				System.out.println("** selectList 결과가 1건도 없음 **");
+			} // if_else
+			
+		} catch (Exception e) {
+			System.out.println("** selectList Exception => " + e.toString());
+		} // try
+	} // selectList
+	
+	// ** 조별 List1
+	// => 매개변수를 활용한 조건을 추가 (Statement를 활용한)
+	public static void joList(int jno) {
+		
+		sql = "select * from student where jno = " + jno;
+		try {
+			st=cn.createStatement();
+			rs=st.executeQuery(sql);
+			System.out.println("** jo List => " +jno);
+			if(rs.next()) {
+				do {
+					System.out.print(rs.getInt(1)+" ");
+					System.out.print(rs.getString("name")+" ");
+					System.out.print(rs.getInt(3)+" ");
+					System.out.print(rs.getInt(4)+" ");
+					System.out.print(rs.getString(5)+" ");
+					System.out.print(rs.getDouble(6)+"\n");
+				} while(rs.next());
+			} else {
+				System.out.println("** joList 결과가 1건도 없음 **");				
+			}
+		} catch (Exception e) {
+			System.out.println("** joList Exception => " + e.toString());
+		} // try
+	} // joList1
+	
+	// ** 조별 List2
+	// => 매개변수를 활용한 조건을 추가 (PreparedStatement를 활용한)
+	public static void joListPS(int jno) {
+		
+		sql = "select * from student where jno = ?";
+		try {
+//			st=cn.createStatement();
+//			rs=st.executeQuery(sql);
+			
+			pst = cn.prepareStatement(sql); // 미리 전달해줘야 바인딩 변수를 해결, 해석한다.
+			// 실행하기 전에 물음표를 해결해야 함. 
+			pst.setInt(1, jno);
+			rs=pst.executeQuery();
+			System.out.println("** jo List => " +jno);
+			if(rs.next()) {
+				do {
+					System.out.print(rs.getInt(1)+" ");
+					System.out.print(rs.getString("name")+" ");
+					System.out.print(rs.getInt(3)+" ");
+					System.out.print(rs.getInt(4)+" ");
+					System.out.print(rs.getString(5)+" ");
+					System.out.print(rs.getDouble(6)+"\n");
+				} while(rs.next());
+			} else {
+				System.out.println("** joList 결과가 1건도 없음 **");				
+			}
+		} catch (Exception e) {
+			System.out.println("** joList Exception => " + e.toString());
+		} // try
+	} // joListPS
+	
+	// ** insert (문제점)
+	// => 입력에 필요한 컬럼을 모두 매개변수로 전달 받아야 한다.
+	//    하지만, 많으면 처리가 불편 -> (데이터를) 객체화
+	//    -> 엔티티(Table) ex. 학원 전산화 할 때, 학생 table, 직원 table, 강사 table이 있어야겠다 싶으면 3개의 entity(엔티티)화 한 것이다. 
+	//    -> 엔티티(Table) -> Java Class로 객체화
+    //    -> DTO, VO, Entity ex) student DTO, student VO라고 한다.
+	//     (data transfer object / value object / Entity : JPA) data access object (DAO) : 처리하는 insert() 같은 메소드들만 모아놓는 곳
+	//     (뷰를 처리하는 애를 분리시키고, dao가 access만 한다.) 
+	//     MVC(model - db를 의미 / View / Controller)
+	//    -> 그 안에 항목 하나 하나가 attribute(컬럼)이다. 
+	// => sql 구문을 완성하기 위해서 문자열 연산을 작성해야 한다. 
+	// insert into student(name, age, jno, info) values('홍길동', 22, 9,'호오오옹길동')
+	// "insert into student(name, age, jno, info) values('" + name + ", "+ age + ", " + jno + ", " + info...
+	// => Statement를 사용하면 이렇게 된다. 이 점을 보완하기 위해서 제공된 객체가 PreparedStatement이다. 
+	// => PreparedStatement는 변수의 위치에 ?(바인딩변수)를 사용한다.
+	// insert into student(name, age, jno, info) values(?,?,?,?)
+	// => ?에 대응값은 Javacode로 처리한다. (PreparedStatement 제공 메서드)
+	
+	public static void insert(String name, int age, int jno, String info) {
+		sql="insert into student(name, age, jno, info) values(?,?,?,?)";
+		try {
+			pst = cn.prepareStatement(sql);
+			pst.setString(1, name);
+			pst.setInt(2, age);
+			pst.setInt(3, jno);
+			pst.setString(4, info);
+//			int cnt = pst.executeUpdate(); // insert, update, delete 때 쓰고, 실행된 개수를
+//			if (cnt == 1) System.out.println(" ** insert 성공 => " + cnt);
+//			else System.out.println(" ** insert 실패 => " + cnt);
+			
+			if (pst.executeUpdate()>0) System.out.println(" ** insert 성공 ** ");
+			else System.out.println("** insert 실패 **");
+			
+		} catch (Exception e) {
+			System.out.println("** insert Exception => " + e.toString());
+		}// try-catch
+	}
+	
+	public static void main(String[] args) {
+		// 1) Connection 확인
+		// => toString()은 생략 가능하다. 
+		//    즉, 출력문에서 인스턴스명을 사용하면 toStirng() 메소드를 호출하는 것입니다.
+		System.out.println("** Connection 확인 =>" + cn); // cn도 어떤 객체의 인스턴스인데, 어떤 객체의 인스턴스 이름을 이름만 사용하게 되면 toString 메소드를 리턴하는 것이다.
+//		System.out.println("** Connection 확인 =>" + cn.toString()); // toString()을 생략하고, 객체명만 사용하게 되면 to String 메소드를 출력하는 것이다. 
+		// 2) Student List
+		//	selectList();
+		// 3) 조별 List 출력
+			joList(2);
+	} // main
+
+} // class

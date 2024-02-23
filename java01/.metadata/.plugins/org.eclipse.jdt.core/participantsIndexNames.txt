@@ -1,0 +1,11 @@
+INDEX VERSION 1.131
+E:\Merci\Mywork\java01\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1240863392.index
+\web01\src\main\java
+E:\Merci\Mywork\java01\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1078106667.index
+\web01\src\main\java
+E:\Merci\Mywork\java01\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3586485736.index
+\web01\src\main\java
+E:\Merci\Mywork\java01\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\491501715.index
+\web01\src\main\java
+E:\Merci\Mywork\java01\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3557307777.index
+\web01\src\main\java

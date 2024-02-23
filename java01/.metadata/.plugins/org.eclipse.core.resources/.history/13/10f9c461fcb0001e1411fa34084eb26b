@@ -1,0 +1,57 @@
+package servlet03_flow;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+//** PageFlow
+// 서버 내에서의 이동 flow지만 서버 밖에서의 이동은 '요청'이라고 한다.(이미 배움)
+//=> 서버내에서 웹페이지(Html, Jsp) 또는 Servlet 간의 이동
+//=> 서버외 : 클라이언트의 요청으로 이동 ( a Tag , submit 등 )    
+//=> 경우
+// 주로 요청을 받는 역할을 서블릿이 하기 때문에, servlet 위주로 배우는 것이다.
+//  servlet -> servlet
+//  servlet <-> jsp , html
+//  jsp -> jsp   
+//** Forward 와 Redirect
+//** Forward : 웹브라우져의 주소창이 안바뀜
+//  => 현재의 요청에 대해 서버내에서 page만 이동함.
+//** Redirect: 웹브라우져의 주소창이 바뀜
+//  => 현재의 요청에 대해 응답 -> 재요청 -> 처리
+
+@WebServlet("/flow01")
+public class Ex01_Flow01 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    
+	public Ex01_Flow01() {
+        super();
+    }
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 1. Forward
+		// => flow01 -> hello (요청은 flow01인데, flow01은 안나타남. hello가 나타난 셈)
+		
+		// => 출력문이 출력되지 않음을 확인
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print("<h2>** Forward Test**</h2>");
+		// => Console 로 확인
+		System.out.println("** Foward Test => flow01");
+		// 1.1) Forward : Servlet -> Servlet
+		String uri= "hello";
+		
+		// 1.2) Forward : Servlet -> Jsp, Html
+		uri="";
+		
+		// RequestDispatcher dis = request.getRequestDispatcher(uri);
+		// dis.forward(request, response);
+		request.getRequestDispatcher(uri).forward(request, response);
+		
+	} // doPost
+	
+} // class

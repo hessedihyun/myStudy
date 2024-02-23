@@ -1,0 +1,44 @@
+package servlet01;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+ @WebServlet("/getpost")
+public class Ex03_GetPost extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    public Ex03_GetPost() {
+        super();
+    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    // 1) request 의 Parameter 처리
+    // => 한글처리, getParameter 전에 해야함
+    //   - Tomcat(WAS) 은 Get 방식요청에서는 "UTF-8" 을 default 로 적용함 
+    //   ( html 문서에서 "UTF-8" 작성되었고 , Get 방식으로 전송되면 생략가능
+    //     단, post 방식에서는 반드시 처리해야함 ) 
+	request.setCharacterEncoding("UTF-8");
+	String id = request.getParameter("id"); // 파라미터의 name 값을 불러와 변수 id에 넣어줌 
+	// 2) name이 id인 input Tag의 value 값을 return
+	String name = request.getParameter("name");
+	
+	response.setContentType("text/html; charset=UTF-8");
+	PrintWriter out = response.getWriter();
+	out.print("<html><body>");
+	out.print("<h2 style='color:blue;'> ** Hello Servlet **</h2>");
+	out.print("<h3> => 전달된 parameter 확인</h3>");
+	out.print("<h3> => id: "+id+"</h3>");
+	out.print("<h3> => Name: "+name+"</h3>");
+	out.print("<h3> => 여기는 doGet 메서드입니다.</h3>");
+	out.print("</body></html>");
+	
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request,response);
+	}
+
+} // class 

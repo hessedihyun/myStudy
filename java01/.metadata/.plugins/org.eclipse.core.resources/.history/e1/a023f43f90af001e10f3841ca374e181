@@ -1,0 +1,44 @@
+package sevlet01;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/hello")
+public class Ex01_HelloSevlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    public Ex01_HelloSevlet() {
+        super();
+    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.getWriter().append("Served at: ")
+							.append(request.getContextPath())
+							.append("Here is the get method section");
+	// response에 getWriter로 데이터를 받는다. append-append로 데이터가 쌓인다.
+	//printWriter라는 객체를 의미한다.
+		
+	PrintWriter out = response.getWriter();
+	out.print("<html><body>");
+	out.print("<h2 style='color:blue;'> ** Hello Servlet **</h2>");
+	out.print("<h3> => ContextPath : " + request.getContextPath()+"</h3>");
+	out.print("<h3> => 여기는 doGet 메서드입니다.</h3>");
+	
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		out.print("<html><body>");
+		out.print("<h2 style='color:blue;'> ** Hello Servlet **</h2>");
+		out.print("<h3> => ContextPath : " + request.getContextPath()+"</h3>");
+		out.print("<h3> => 여기는 doGet 메서드입니다.</h3>");
+//		response.getWriter().append("Served at: ")
+//							.append(request.getContextPath())
+//							.append("Here is the post method section");
+	// response에 getWriter로 데이터를 받는다. append-append로 데이터가 쌓인다.
+	}
+
+} // class 

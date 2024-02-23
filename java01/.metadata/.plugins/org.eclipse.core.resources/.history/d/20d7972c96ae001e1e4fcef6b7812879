@@ -1,0 +1,36 @@
+package jdbc02;
+import java.util.List;
+
+	public class StudentController {
+	
+		StudentService service = new StudentService();
+	
+	public void printList(List<StudentDTO> list) {
+		System.out.println("** Student List **");
+		
+		if (list != null) {
+			for(StudentDTO s : list) {
+				System.out.println(s);
+			}
+		} else {
+			System.out.println("** selectList 결과가 1건도 없음 **");	
+		}
+	}
+	public void printDetail(StudentDTO dto) {
+
+		System.out.println("** selectOne 성공 **");
+	
+		if (dto!=null) {
+			System.out.println(dto);
+		}else {
+		System.out.println("** selectOne 해당 결과가 없음 **");
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		StudentController sc = new StudentController();
+		sc.printList(sc.service.selectList());
+		sc.printDetail(sc.service.selectOne(11));
+	} 
+}

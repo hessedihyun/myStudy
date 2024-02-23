@@ -1,0 +1,68 @@
+package jdbc02;
+import java.util.List;
+
+	public class StudentController {
+	
+		StudentService service = new StudentService();
+	
+	public void printList(List<StudentDTO> list) {
+		System.out.println("** Student List **");
+		
+		if (list != null) {
+			for(StudentDTO s : list) {
+				System.out.println(s);
+			}
+		} else {
+			System.out.println("** selectList 결과가 1건도 없음 **");	
+		}
+		System.out.println();
+	}
+	public void printDetail(StudentDTO dto) {
+
+		System.out.println("** selectOne 성공 **");
+	
+		if (dto!=null) {
+			System.out.println(dto);
+		}else {
+		System.out.println("** selectOne 해당 결과가 없음 **");
+		}
+	}
+//	public void printInsert(StudentDTO dto) {
+//		System.out.println("** Insert 성공 **");
+//		
+//		if (dto!=null) {
+//			System.out.println(dto);
+//		}else {
+//		System.out.println("** Insert할 내용이 없음 **");
+//		}
+//	}
+	
+	
+	public static void main(String[] args) {
+		
+		StudentController sc = new StudentController();
+//		sc.printList(sc.service.selectList());
+//		sc.printDetail(sc.service.selectOne(3));
+		
+      // ** 참조 자료형 TEST
+		StudentDTO dto2 = new StudentDTO();
+		dto2.setSno(3);
+		sc.service.selectOne2(dto2);
+		sc.printDetail(dto2);
+		
+		
+//		sc.printInsert(sc.service.insert(19,"원샷한솔",22,18,"유튜버 원샷한솔입니다",100));
+		
+		
+//		StudentDTO dto = new StudentDTO();
+//		dto.setName("바나나");
+//		dto.setAge(30);
+//		dto.setJno(9);
+//		dto.setInfo("insert test");
+//		
+//		if(sc.service.insert(dto)>0) {
+//			System.out.println("** update 성공 & 확인 **");
+//			
+//		}
+	} 
+}

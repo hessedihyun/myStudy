@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>** index **</title>
+</head>
+<body>
+<h2>** Dynamic Web Project **</h2>
+<h2> 안녕하세요요요요요요 안녕히가세요요요요요</h2>
+
+<form action="hello" method="get">
+	<input type="text" name="id"/>
+	<input type="submit" value="Test"/>	
+</form>
+<hr>
+<img alt="" src="images/a1.png" width="300" height="200">
+</body>
+</html>
