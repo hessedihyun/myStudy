@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.JoDTO;
 import com.example.demo.domain.MemberDTO;
 import com.example.demo.domain.UserDTO;
+import com.example.demo.service.BoardService;
 import com.example.demo.service.JoService;
 import com.example.demo.service.MemberService;
 
@@ -130,6 +132,7 @@ public class RESTController {
 	
 	MemberService mservice;
 	JoService jservice;
+	BoardService bservice;
 	PasswordEncoder passwordEncoder; // DemoConfig에 생성
 	
 	@GetMapping("/hello")
@@ -415,6 +418,7 @@ public class RESTController {
 		   , consumes = MediaType.MULTIPART_FORM_DATA_VALUE
 		   , produces = MediaType.TEXT_PLAIN_VALUE)
    public ResponseEntity<?> rsjoin(MemberDTO dto) throws Exception {
+	   // throws Exception : 파일(file, multipart/form-data)이 오고 갈때 main에 오류를 위임해 줌
 	   // js객체 형태가 자바에 직접 들어왔기 때문에 @RequestBody 써줄 필요 없다. (JSON이 아님)
 	   
 	   ResponseEntity<String> result = null;
@@ -451,6 +455,50 @@ public class RESTController {
 		  log.info("** rsJoin HttpStatus.BAD_GATEWAY => " + HttpStatus.BAD_GATEWAY);
 	   }
 	   return result;
-   } // rsjoin
+   } // rsjoin 
    
+   // ** Ajax, 반복문에 이벤트 적용하기
+   // 1) idbList(id별 boardList)
+   @GetMapping( value = "/idblist/{id}")
+   public ResponseEntity<?> idbList(@PathVariable("id") String id){
+	   ResponseEntity<?> result = null;
+	   
+	   List<BoardDTO> list = bservice.idbList(id);
+	   // => 출력 Data 유/무
+	   if(list!=null && list.size()>0) {
+		   result = ResponseEntity.status(HttpStatus.OK).body(list);
+		   log.info("** idblist HttpStatus.OK => "+ HttpStatus.OK);
+	   } else {
+		   result = ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("~~ 출력할 데이터가 없습니다.~~");
+		   log.info("** idblist HttpStatus.BAD_GATEWAY => "+ HttpStatus.BAD_GATEWAY);
+	   }
+	   return result;
+   } // idbList
+   
+   @DeleteMapping("/axidelete/{ii}")
+   public ResponseEntity<?> axidelete(@PathVariable("ii") String id) {
+	  
+	   if(mservice.delete(id)>0) {
+		   log.info(" axidelete HttpStatus.OK => " + HttpStatus.OK);
+		   return new ResponseEntity<String>("** 삭제 성공 ** ", HttpStatus.OK);
+	   } else {
+		   log.info(" delete HttpStatus.BAD_GATEWAY => " + HttpStatus.BAD_GATEWAY);
+		   return new ResponseEntity<String>("** 삭제 실패, Data_NotFound ** ", HttpStatus.BAD_GATEWAY);
+	   }
+   } // axidelete
+   
+   @GetMapping("/jodetail/{jjo}")
+   public ResponseEntity<?> axiJoDetail(@PathVariable("jjo") int jno) {
+	   ResponseEntity<?> result = null;
+	   JoDTO dto = jservice.selectOne(jno);
+	   if(dto!=null) {
+		   log.info("axiJoDetail HttpStatus.OK => "+ HttpStatus.OK);
+		   System.out.println("dto => "+ dto);
+		   result = ResponseEntity.status(HttpStatus.OK).body(dto);
+	   } else {
+		   log.info("axiJoDetail HttpStatus.BAD_GATEWAY => "+ HttpStatus.BAD_GATEWAY);
+		   result = ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("~~ 출력할 jo 데이터가 없습니다. ~~");
+	   } // if-else
+	   return result;
+   } // axiJoDetail
 } // class

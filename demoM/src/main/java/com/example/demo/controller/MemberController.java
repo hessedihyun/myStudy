@@ -51,24 +51,37 @@ public class MemberController {
 	JoService jservice;
 	PasswordEncoder passwordEncoder; // DemoConfig에서 설정함
 	
-	@GetMapping("/axmpagelist")
-	public String axmPageList(HttpServletRequest request, Model model, SearchCriteria cri, PageMaker pageMaker) {
-		String uri="axTest/axmPageList";
-		
+	
+	// ** Ajax Member_Paging
+	// => ver01: "/axmcri"만 구현( Search 기능만 구현)
+	// => ver02: "/axmcheck" 요청도 처리할 수 있도록 구현
+	// 			-> mappingName에 "check"가 포함되어 있다면, service를 아래 메서드를 호출하도록
+	//             service.mCheckList(cri), mCheckRowsCount(cri)
+	@GetMapping({"/axmcri","/axmcheck"})
+	public String axmcri(HttpServletRequest request, Model model, SearchCriteria cri, PageMaker pageMaker) {
 		// 1) Criteria 처리
 		cri.setSnoEno();
-				
-		// 2) Service	
-		model.addAttribute("list", service.mPageList(cri));
+
+		// 2) 요청 확인 & Service 처리
+		String mappingName = 
+				request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+		pageMaker.setMappingName(mappingName);
+		pageMaker.setCri(cri);
+		if(mappingName.contains("check")) {
+			// => Check 조건처리
+			model.addAttribute("list", service.mCheckList(cri));
+			pageMaker.setTotalRowsCount(service.mCheckRowsCount(cri));
+		} else { 
+			// => Search 조건처리
+			model.addAttribute("list", service.mPageList(cri));
+			pageMaker.setTotalRowsCount(service.mTotalRowsCount(cri));
+		}
 		
 		// 3) View 처리
-		String mappingName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
-		pageMaker.setCri(cri);
-		pageMaker.setMappingName(mappingName);
-		pageMaker.setTotalRowsCount(service.mTotalRowsCount(cri));
 		model.addAttribute("pageMaker", pageMaker);
-		return uri;
-	}
+		
+		return "axTest/axmPageList";
+	} // axmcri
 		
 	@GetMapping(value = "/aximlist")
 	public String axMemberList(Model model) {

@@ -31,7 +31,6 @@ public class JoController {
 
 	@RequestMapping(value = "/joDetail", method = RequestMethod.GET)
 	public String jdetail(Model model, String jno) {
-		System.out.println("여기");
 		String uri = "jo/joDetail";
 		model.addAttribute("jdetail", service.selectOne(Integer.parseInt(jno)));
 		model.addAttribute("jmlist", service.selectMember(Integer.parseInt(jno)));
