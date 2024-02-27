@@ -13,7 +13,7 @@ import service.MemberService;
 public class C02_Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public C02_Login() {
-        super();
+        super(); 
     }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. 요청분석
