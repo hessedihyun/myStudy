@@ -1,104 +1,45 @@
 package com.example.demo.service;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.domain.MemberDTO;
-import mapperInterface.MemberMapper;
-import pageTest.SearchCriteria;
+import com.example.demo.entity.Member;
+import com.example.demo.repository.MemberRepository;
 
-//** Mybatis 적용 **************************
-//=> CRUD 처리를 Mapper 를 이용
-//=> DAO 대신 Mapper interface ->  ~Mapper.xml
-
-//** Mybatis interface 방식으로 적용
-//=> MemberDAO 대신 MemberMapper 사용
-//=> MemberMapper 의 인스턴스를 스프링이 생성해주고 이를 주입받아 실행함
-//   (스프링이 생성해주는 동일한 타입의 클래스는 JUnit Test 로 확인가능, 추후 실습) 
-//=> 단, 설정화일에 <mybatis-spring:scan base-package="mapperInterface"/> 반드시 추가해야함
-//  MemberDAO의 Sql구문 처리를 mapperInterface 사용으로 MemberMapper 가 역할을 대신함
-
-//=> SQL 구문 : xml로 작성 -> 이 파일을 Mapper라 함 
-//=> Mapper 작성규칙
-// -> mapperInterface 와 패키지명, 파일명이 동일해야함
-// -> 즉, Java interface, Mapper, Mapper의 namespace 값(패키지명, 파일명)이 모두 동일해야함.
-// -> 그리고 해당 메서드는 Mapper의 xml 구문의 id 속성 값으로 찾음
-
-// @Service
+@Service
 public class MemberServiceImpl implements MemberService {
+
 	// ** 전역변수 정의
-	// MemberDAO dao = new MemberDAO();
-    // @Autowired
-    // MemberDAO dao;
+	private final MemberRepository repository;
 	
-	// ** Mybatis 적용
-	// => mapper 구현객체는 스프링이 실행시 자동으로 만들어 주입해준다.
-	// => 그러므로 개발자는 interface와 xml만 구현하고 Service랑 연결해주면 됨
-	@Autowired
-	MemberMapper mapper;
-	
-	// ** memberInsert
-	@Override
-	public int memberInsert(String id, int jno) {
-		return mapper.memberInsert(id, jno);
-	}
-	
-	// ** Member Paging & Check_List
-	@Override
-	public List<MemberDTO> aCheckList(SearchCriteria cri) {
-		return mapper.aCheckList(cri);
-	}
-	@Override
-	public int aCheckRowsCount(SearchCriteria cri) {
-		return mapper.aCheckRowsCount(cri);
-	}
-	@Override
-	public List<MemberDTO> mCheckList(SearchCriteria cri) {
-		return mapper.mCheckList(cri);
-	}
-	@Override
-	public int mCheckRowsCount(SearchCriteria cri) {
-		return mapper.mCheckRowsCount(cri);
-	}
-	@Override
-	public List<MemberDTO> mPageList(SearchCriteria cri) {
-		// return mapper.mPageList(cri);
-		return mapper.mSearchList(cri);
-	}
-	@Override
-	public int mTotalRowsCount(SearchCriteria cri) {
-		// return mapper.mTotalRowsCount(cri);
-		return mapper.mSearchRowsCount(cri);
-	}
-	
+	// ** 기본 C.R.U.D 메소드
 	// ** selectList
 	@Override
-	public List<MemberDTO> selectList() {
-		return mapper.selectList();
+	public List<Member> selectList() {
+		return repository.findAll();
 	}
 	// ** selectOne
 	@Override
 	public MemberDTO selectOne(String id) {
-		return mapper.selectOne(id);
+		return repository.selectOne(id);
 	}
 	// ** insert
 	@Override
 	public int insert(MemberDTO dto) {
-		return mapper.insert(dto);
+		return repository.insert(dto);
 	}
 	// ** update
 	@Override
 	public int update(MemberDTO dto) {
-		return mapper.update(dto);
+		return repository.update(dto);
 	}
 	// ** delete
 	@Override
 	public int delete(String id) {
-		return mapper.delete(id);
+		return repository.delete(id);
 	}
 	// ** pwUpdate
 	public int pwUpdate(MemberDTO dto) {
-		return mapper.pwUpdate(dto);
+		return repository.pwUpdate(dto);
 	}
 	
 } // class
