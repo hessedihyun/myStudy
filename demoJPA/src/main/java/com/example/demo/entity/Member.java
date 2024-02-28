@@ -12,6 +12,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/* entity와 DTO를 구분해서 만들면 꼭 서로가 치환(변환)될 수 있는 시스템이 구축되어야 한다. entity로 퉁쳐서 만들기도 한다.*/
+
 @Entity // jpa는 java측 라이브러리 => import javax.persistence.Entity;
 // => 해당클래스가 엔티티(테이블)를 위한 클래스이며, 
 //    해당클래스의 인스턴스들은 JPA의 엔티티매니저가 관리하는 엔티티 객체임을 의미함. 

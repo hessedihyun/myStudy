@@ -49,7 +49,13 @@
 &nbsp;<a href="board/boardList">BList</a>&nbsp;
 &nbsp;<a href="bcrypt">BCrypt</a><br>
 &nbsp;<a href="board/bPageList">BPaging</a>&nbsp;
-&nbsp;<a href="/axtestform">AjaxTest</a>&nbsp;
+&nbsp;<a href="/axtestform">AjaxTest</a>
+</div><hr>
+<div class="div2">
+&nbsp;<a href="/ginsert">GInsert</a><br>
+&nbsp;<a href="/glist">GList</a><br>
+&nbsp;<a href="/gupdate">GUpdate</a><br>
+&nbsp;<a href="/gpage">GPage</a><br>
 </div>
 </body>
 </html>
