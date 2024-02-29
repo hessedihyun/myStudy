@@ -126,7 +126,7 @@ public class MemberController {
 	@PostMapping("/update")
 	public String update(HttpServletRequest request, HttpSession session, 
 						 Model model, Member entity) throws IOException {
-		
+		// 
 		String uri = "member/mdetail";
 		model.addAttribute("myInfo", entity);
 		MultipartFile uploadfilef = entity.getUploadfilef();
