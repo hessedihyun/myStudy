@@ -1,72 +1,43 @@
 package com.example.demo.service;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.domain.BoardDTO;
+import com.example.demo.entity.Board;
+import com.example.demo.repository.BoardRepository;
+
+import lombok.RequiredArgsConstructor;
 import mapperInterface.BoardMapper;
 import pageTest.SearchCriteria;
 
-// @Service
+@Service
+@RequiredArgsConstructor
 public class BoardSerivceImpl implements BoardService {
 	
-	// @Autowired
-	// BoardDAO dao;
-	
-	
-	@Autowired
-	BoardMapper mapper;
-	
-	// ** Ajax: id별 boardList 출력
-	@Override
-	public List<BoardDTO> idbList(String id) {
-		return mapper.idbList(id);
-	}
-	
-	// ** Board Check_List
-	@Override
-	public List<BoardDTO> bCheckList(SearchCriteria cri) {
-		return mapper.bCheckList(cri);
-	}
-	@Override
-	public int bCheckRowsCount(SearchCriteria cri) {
-		return mapper.bCheckRowsCount(cri);
-	}
-	
-	// ** Board Search Paging
-	// => ver01 : Criteria 사용
-	// => ver02 : SearchCriteria 사용
-
-	@Override
-	public List<BoardDTO> bPageList(SearchCriteria cri) {
-		// return mapper.bPageList(cri);   //ver01
-		   return mapper.bSearchList(cri); //ver02
-	}
-
-	@Override
-	public int totalRowsCount(SearchCriteria cri) {
-		// return mapper.totalRowsCount(cri);    //ver01
-		   return mapper.bSearchRowsCount(cri);  //ver02
-	}	
+	private final BoardRepository repository;
 	
 	// ** 답글등록
 	// => rinsert, stepUpdate
 	@Override
-	public int rinsert(BoardDTO dto) {
-		if(mapper.rinsert(dto)>0) {
-			// stepUpdate
-			System.out.println("** stepUpdate Count => " + mapper.stepUpdate(dto));
-			return 1;
-		} else return 0;
+	public int rinsert(Board entity) {
+		return 0;
 	}
 	@Override
-	public List<BoardDTO> selectList() {return mapper.selectList();}
+	public List<Board> selectList() {return repository.findAll();}
 	@Override
-	public BoardDTO selectOne(int seq) {return mapper.selectOne(seq);}
+	public Board selectOne(int seq) {
+		Optional<Board> result = repository.findById(seq);
+		if(result.isPresent()) return result.get();
+		else return null;
+	}
 	@Override
-	public int insert(BoardDTO dto) {return mapper.insert(dto);}
+	public Board save(Board entity) {
+		return repository.save(entity);
+	}
 	@Override
-	public int update(BoardDTO dto) {return mapper.update(dto);}
-	@Override
-	public int delete(BoardDTO dto) {return mapper.delete(dto);}
+	public void deleteById(int seq) {
+		repository.deleteById(seq);
+	}
 } // class

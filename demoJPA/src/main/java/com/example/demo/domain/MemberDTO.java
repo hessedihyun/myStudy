@@ -74,7 +74,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor // 매개 인수가 있는 모든 것
 @NoArgsConstructor // 매개인수가 없어도
-public class MemberDTO {
+public class MemberDTO extends JoDTO {
 	// 1) private 멤버 변수
 	private String id; // Primary_Key
 	private String password; // not null
@@ -94,4 +94,12 @@ public class MemberDTO {
 	// pom.xml에 dependency 추가
 	// => 구현체 commonsMultipartFile 생성(servlet ~ .xml)
 	private String [] grouping;
-}
+	
+	public MemberDTO(String id, String name, int jno, String jname, String project) {
+		this.id = id;
+		this.name = name;
+		this.jno = jno;
+		super.jname = jname;
+		super.project = project;
+	} //  MemberRepository findMemberJoin()을 위한 생성자 오버로딩
+}// class (Jo를 상속 받음)

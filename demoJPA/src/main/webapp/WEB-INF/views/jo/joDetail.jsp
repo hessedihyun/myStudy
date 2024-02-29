@@ -56,7 +56,7 @@
 &nbsp;<a href="javascript:history.go(-1)">JMList닫기</a>&nbsp;
 </c:if> --%>
 &nbsp;<a href="joInsert">조등록</a>&nbsp;
-&nbsp;<a href="joUpdate?jno=${requestScope.jdetail.jno}">조수정</a>&nbsp;
+&nbsp;<a href="detail?jCode=U&jno=${requestScope.jdetail.jno}">조수정</a>&nbsp;
 &nbsp;<a href="delete?jno=${requestScope.jdetail.jno}">조삭제</a>&nbsp;
 &nbsp;<a href="jmInsert?currjno=${requestScope.jdetail.jno}">멤버등록</a>&nbsp;
 &nbsp;<a href="joList">JLIST</a>&nbsp;

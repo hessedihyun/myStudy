@@ -1,17 +1,46 @@
-/* package com.example.demo.service;
-import java.util.List;
+package com.example.demo.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
+
+import com.example.demo.domain.MemberDTO;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor // final 초기값 없이, repository 정의
 public class MemberServiceImpl implements MemberService {
-
-	// ** 전역변수 정의
-	private final MemberRepository repository;
 	
-	// ** 기본 C.R.U.D 메소드
+	private final MemberRepository repository; // 수정 불가하도록 private final
+	
+	// ** Join
+	@Override
+	public List<MemberDTO> findMemberJoin() {
+		return repository.findMemberJoin();
+	}
+	@Override
+	public List<MemberDTO> memberJoin() {
+		return repository.memberJoin();
+	}
+	// ** Password Update
+	// => @Query 적용
+	@Override
+	public void updatePassword1(String id, String password) {
+		repository.updatePassword1(id, password);
+	}
+	@Override
+	public void updatePassword2(String id, String password) {
+		repository.updatePassword2(id, password);
+	}
+	// ** jno별 Member 출력
+	@Override
+	public List<Member> findByJno(int jno) {
+		return repository.findByJno(jno);
+	}
 	// ** selectList
 	@Override
 	public List<Member> selectList() {
@@ -19,28 +48,21 @@ public class MemberServiceImpl implements MemberService {
 	}
 	// ** selectOne
 	@Override
-	public MemberDTO selectOne(String id) {
-		return repository.selectOne(id);
+	public Member selectOne(String id) {
+		Optional<Member> result = repository.findById(id);
+		if(result.isPresent()) 
+			return result.get(); // Optional 객체에 저장된 값을 제공
+			else return null;
 	}
-	// ** insert
+	// ** insert & update
 	@Override
-	public int insert(MemberDTO dto) {
-		return repository.insert(dto);
-	}
-	// ** update
-	@Override
-	public int update(MemberDTO dto) {
-		return repository.update(dto);
+	public Member save(Member entity) {
+		// JPA Exception은 Controller에서 함 
+		return repository.save(entity);
 	}
 	// ** delete
 	@Override
-	public int delete(String id) {
-		return repository.delete(id);
+	public void deleteById(String id) {
+		repository.deleteById(id);
 	}
-	// ** pwUpdate
-	public int pwUpdate(MemberDTO dto) {
-		return repository.pwUpdate(dto);
-	}
-	
 } // class
-*/

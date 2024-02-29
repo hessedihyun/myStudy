@@ -27,7 +27,7 @@
 	<tr>
 	<c:if test="${not empty requestScope.jlist}">
 		<c:forEach var="j" items="${requestScope.jlist}">
-			<td><a href="joDetail?jno=${j.getJno()}">${j.getJno()}조</a></td>
+			<td><a href="detail?jno=${j.jno}&jCode=D">${j.jno}조</a></td>
 			<td>${j.getJname()}</td>
 			<td>${j.getCaptain()}</td>
 			<td>${j.getCname()}</td>

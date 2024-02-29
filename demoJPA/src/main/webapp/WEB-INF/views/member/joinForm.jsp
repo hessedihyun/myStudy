@@ -252,12 +252,12 @@ function inCheck() {
 					<c:forEach items="${requestScope.myInfo}" var="info" >
 						<option value="${info.jno}" ${info.jno==1? "selected":""}>${info.jname}</option>
 					</c:forEach>
-					<!-- <option value="0">미정</option> -->
-					<%-- <option value="1" ${requestScope.myInfo.jno==1? "selected":""}>1조</option>
+					<option value="0">미정</option> -->
+					<option value="1" ${requestScope.myInfo.jno==1? "selected":""}>1조</option>
 					<option value="2" ${requestScope.myInfo.jno==2? "selected":""}>2조</option>
 					<option value="3" ${requestScope.myInfo.jno==3? "selected":""}>3조</option>
 					<option value="4" ${requestScope.myInfo.jno==4? "selected":""}>4조</option>
-					<option value="7" ${requestScope.myInfo.jno==7? "selected":""}>7조</option> --%>
+					<option value="7" ${requestScope.myInfo.jno==7? "selected":""}>7조</option>
 				</select>
 			</td>
 		</tr>

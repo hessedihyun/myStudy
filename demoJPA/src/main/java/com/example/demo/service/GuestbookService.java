@@ -11,6 +11,8 @@ import com.example.demo.entity.Guestbook;
 //=> Entity 와 DTO를 용도별로 분리해서 사용하는경우 필요함.
 //   dtoToEntity() 와  entityToDto() 메서드 추가
 //   즉, default 메서드로 작성
+
+
 public interface GuestbookService {
 	
 	// => JPA CRUD 구현

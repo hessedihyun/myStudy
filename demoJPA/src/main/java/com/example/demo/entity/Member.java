@@ -79,6 +79,4 @@ public class Member {
 	      - EnumType.STRING : 문자열로 저장 "val1, val2, val3" 
 	       - EnumType.ORDINAL: 인덱스가 저장 0 ~ 4
 	   */
-	
-	private String [] grouping;
 }
