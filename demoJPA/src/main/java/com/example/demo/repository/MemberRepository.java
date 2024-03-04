@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.example.demo.domain.MemberDTO;
 import com.example.demo.entity.Member;
+
 //** JPA 쿼리의 특징
 //=> 테이블이 아닌 엔티티 객체를 대상으로 처리함.
 
@@ -74,12 +75,12 @@ import com.example.demo.entity.Member;
 // 3) JPA Criteria Query(객체지향 쿼리 빌더)
 // => JPQL Query Builder Class
 // => JPQL을 자바 코드로 작성하도록 도와주는 빌더 클래스 API
-//  자바코드로 JPQL을 작성할 수 있도록 도와주는 JPQL의 빌더 역할이라고 보면됨.
+//  자바코드로 JPQL을 작성할 수 있도록 도와주는 JPQL의 빌더 역할이라고 보면됨. 
 // => 장점: 자바코드이므로 오타가 나면 컴파일 오류가 난다. 동적 코드 가능
 // => 단점: 유지보수가 너무 어렵다. (본인의 코드도 나중에 다시 보면 이해하기 힘들다.)     
 // => 그러므로 QueryDSL 사용을 권장.
 
-// 4) QueryDSL
+// 4) QueryDSL  ※ (3)보다 (4)를 권장 (1,2)번으로 해결하다가 (4)를 활용하는 상황이어야 한다.
 // => Querydsl - 레퍼런스 문서
 // http://querydsl.com/static/querydsl/4.0.1/reference/ko-KR/html_single/
 // => QueryDSL사용법.txt 메모장 참고
@@ -139,7 +140,7 @@ public interface MemberRepository
 					extends JpaRepository<Member, String>{ 
 					// Entity가 누군지 알려줘야 해서 Generic임. <T, ID> 에서 T는 Entity. ID는 primary key의 type이다.
 		
-		// 1) JPARepository Method 규약
+		// 1) JPARepository Method naming 규약
 		// => jno별 Member 출력
 		List<Member> findByJno(int jno);
 		
@@ -164,6 +165,7 @@ public interface MemberRepository
 	    // => JPQL
 	    @Query("SELECT new com.example.demo.domain.MemberDTO(m.id, m.name, m.jno, j.jname, j.project) FROM Member m LEFT JOIN Jo j ON m.jno=j.jno order by m.jno")
 	    List<MemberDTO> findMemberJoin(); // Member, Jo : 엔티티
+	    // new 생성자(파라미터들)의 파라미터 순서가 생성자 오버로딩 필드 순서랑 동일해야 한다.
 	    
 	    // 2.4) Navtive_Query로 적용하기(2.3)
 	    @Query(nativeQuery = true, value = "SELECT id, name, jno, j.jname, j.project FROM member m LEFT JOIN jo j ON m.jno=j.jno order by m.jno")

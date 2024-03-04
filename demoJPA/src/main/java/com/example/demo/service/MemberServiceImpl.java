@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.MemberDTO;
 import com.example.demo.entity.Member;
+import com.example.demo.repository.MemberDSLRepositoryImpl;
 import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.MyRepositoryImpl;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -16,11 +19,14 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService {
 	
 	private final MemberRepository repository; // 수정 불가하도록 private final
+	private final MyRepositoryImpl emrepository; //
+	private final MemberDSLRepositoryImpl dslrepository;
 	
 	// ** Join
 	@Override
 	public List<MemberDTO> findMemberJoin() {
-		return repository.findMemberJoin();
+		// return repository.findMemberJoin(); // ver01
+		return dslrepository.findMemberJoinDSL(); // ver02
 	}
 	@Override
 	public List<MemberDTO> memberJoin() {
@@ -39,20 +45,24 @@ public class MemberServiceImpl implements MemberService {
 	// ** jno별 Member 출력
 	@Override
 	public List<Member> findByJno(int jno) {
-		return repository.findByJno(jno);
+		// return repository.findByJno(jno); // ver01
+		return dslrepository.findMemberJnoDSL(jno); // ver02
 	}
 	// ** selectList
 	@Override
 	public List<Member> selectList() {
-		return repository.findAll();
+		// return repository.findAll(); // ver01
+		return emrepository.emMemberList(); // ver02 (EntityManager 직접 사용 Test)
 	}
 	// ** selectOne
 	@Override
 	public Member selectOne(String id) {
-		Optional<Member> result = repository.findById(id);
+		/* Optional<Member> result = repository.findById(id);
 		if(result.isPresent()) 
 			return result.get(); // Optional 객체에 저장된 값을 제공
-			else return null;
+			else return null; */ // ver01
+		
+		return emrepository.emMemberDetail(id); // ver02 : EntityManager Test
 	}
 	// ** insert & update
 	@Override
