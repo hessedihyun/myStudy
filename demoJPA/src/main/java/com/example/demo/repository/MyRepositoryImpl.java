@@ -25,6 +25,7 @@ public class MyRepositoryImpl implements MyRepository {
 		// => "select * from Member order by id asc" 500 오류 발생
 		//    antlr.NoViableAltException : unexpected token: * ~~~
 		//    Entity 를 통해서 접근하기 때문에 * 사용 금지, 앨리어스를 통해 컬럼명 접근
+	
 	}
 	
 	// => Parameter 적용
